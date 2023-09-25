@@ -1,14 +1,20 @@
 class Reader:
 
-
+    letters_replace = ["\n", "\t", "\r", ",", "?", ". ", "!"] #TODO: Add more?
     def read_book(self, path):
         """Read a book at a given path, return a tuple of name of the book and list of words
         """
         #TODO: implement this method, do preprocessing of words
-        words = {"hello", "word", "hi"}
-        bookname = "dracula"
-        return (bookname, words)
+        book_name = path.split("/")[-1].split(".")[0]
+        words = []
 
+        try:
+            with open(path, 'r') as file:
+                file_contents = file.read()
+                contents_replaced = file_contents
+                book_content = contents_replaced.split("***")[2]
+                words = book_content.split(" ")
+        except Exception as e:
+            print(f"Exception occurred: {e}")
 
-
-print(Reader().read_book("path"))
+        return (book_name, words)

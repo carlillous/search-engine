@@ -18,9 +18,9 @@ class Indexer:
 
         for word in words:
             if word not in self._word_indexes:
-                self._word_indexes[word] = [index]
+                self._word_indexes[word] = {index}
             else:
-                self._word_indexes[word].append(index)
+                self._word_indexes[word].add(index)
 
 
     def index_all(self, directory):
@@ -31,7 +31,6 @@ class Indexer:
             # checking if it is a file
             if os.path.isfile(file):
                 self._index_one(file, i)
-                break
 
     def get_indexes_of_word(self, word):
         return self._word_indexes[word]
@@ -51,4 +50,4 @@ class Indexer:
 indexer = Indexer()
 indexer.index_all("datalake")
 print(indexer._book_names)
-print(indexer._word_indexes)
+print(indexer.get_book_names_for_indexes(indexer.get_indexes_of_word("Yellow")))
