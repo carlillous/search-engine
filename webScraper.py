@@ -6,22 +6,21 @@ import random
 
 class WebScraper:
 
-    def __init__(self, number):
+    def __init__(self, number, d_name="datalake"):
         self.n = number
+        self.directory_name = d_name
         self._start()
 
     def _start(self):
 
-        directory_name = "datalake"
+        if not os.path.exists(self.directory_name):
+            os.makedirs(self.directory_name)
 
-        if not os.path.exists(directory_name):
-            os.makedirs(directory_name)
-
-        book_content_folder = os.path.join(directory_name, "book_content")
+        book_content_folder = os.path.join(self.directory_name, "book_content")
         if not os.path.exists(book_content_folder):
             os.makedirs(book_content_folder)
 
-        metadata_folder = os.path.join(directory_name, "metadata")
+        metadata_folder = os.path.join(self.directory_name, "metadata")
         if not os.path.exists(metadata_folder):
             os.makedirs(metadata_folder)
 
