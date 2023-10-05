@@ -5,10 +5,14 @@ from reader import Reader
 
 
 class DictionaryIndexer:
-    persistence = persistence.JsonDictionaryPersistence()
 
-    _book_names = {}
-    _word_indexes = {}
+    def __init__(self, book_names_path="book_names.json", word_indexes_path="word_indexes.json"):
+        self.persistence = persistence.JsonDictionaryPersistence()
+
+        self._book_names_path = book_names_path
+        self._word_indexes_path = word_indexes_path
+
+        self._load()
 
     def _index_one(self, path, index):
         reader = Reader()
@@ -29,6 +33,7 @@ class DictionaryIndexer:
             if os.path.isfile(file):
                 self._index_one(file, i)
         print("[INDEXER]: -------------------- Indexing ended --------------------")
+        self._save()
 
     def _get_indexes_of_word(self, word):
         return self._word_indexes[word]
@@ -42,17 +47,29 @@ class DictionaryIndexer:
             book_names.append(self._book_names[index])
         return book_names
 
-    def dump(self, book_names_path="book_names.json", word_index_path="word_indexes.json"):
-        self.persistence.dump_dict(book_names_path, self._book_names)
+    def _save(self):
+        self.persistence.dump_dict(self._book_names_path, self._book_names)
+        print(f"[INDEXER]: Saving book names to {self._book_names_path} ...")
         serialized_dict = {key: list(value) for key, value in self._word_indexes.items()}
-        self.persistence.dump_dict(word_index_path, serialized_dict)
+        self.persistence.dump_dict(self._word_indexes_path, serialized_dict)
+        print(f"[INDEXER]: Saving word indexes to {self._word_indexes_path} ...")
 
-    def load(self, book_names_path="book_names.json", word_index_path="word_indexes.json"):
-        loaded_book_names = self.persistence.load_dict(book_names_path)
-        self._book_names = {int(key): value for key, value in loaded_book_names.items()}
+    def _load(self):
+        if os.path.exists(self._book_names_path):
+            print(f"[INDEXER]: Loading book names from {self._book_names_path} ...")
+            loaded_book_names = self.persistence.load_dict(self._book_names_path)
+            self._book_names = {int(key): value for key, value in loaded_book_names.items()}
+        else:
+            print(f"[INDEXER]: Creating empty book names dictionary ...")
+            self._book_names = {}
 
-        loaded_word_indexes = self.persistence.load_dict(word_index_path)
-        self._word_indexes = {key: set(value) for key, value in loaded_word_indexes.items()}
+        if os.path.exists(self._word_indexes_path):
+            print(f"[INDEXER]: Loading word indexes from {self._book_names_path}...")
+            loaded_word_indexes = self.persistence.load_dict(self._word_indexes_path)
+            self._word_indexes = {key: set(value) for key, value in loaded_word_indexes.items()}
+        else:
+            print(f"[INDEXER]: Creating empty word indexes dictionary ...")
+            self._word_indexes = {}
 
     def get_list_of_books_for_word(self, word):
         indexes = self._get_indexes_of_word(word)
