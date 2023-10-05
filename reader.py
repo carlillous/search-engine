@@ -2,6 +2,7 @@ import nltk
 from nltk.tokenize import WhitespaceTokenizer
 from nltk.corpus import stopwords
 import re
+from scrapper import Scrapper
 class Reader:
     def __init__(self):
         nltk.download('stopwords',quiet='True')
@@ -11,7 +12,7 @@ class Reader:
         """Preprocess the text of the book and return it in a list"""
 
         tokens = nltk.word_tokenize(texto.replace('—',' ').replace('.', '').replace('_', '').replace('=','').replace('-',' '))
-        lista_filtrada = [cadena for cadena in tokens if any(letra.isalpha() for letra in cadena)]
+        lista_filtrada = [cadena.lower() for cadena in tokens if any(letra.isalpha() for letra in cadena)]
         words = [re.sub(r'^[^a-zA-Z\s]+|[^a-zA-Z\s]+$', '', words) for words in lista_filtrada if words not in self.stopwords_eng]
         return words
 
@@ -21,8 +22,7 @@ class Reader:
 
         try:
             with open(path, 'r',encoding='utf-8') as file:
-                file_contents = file.read()
-                book_content = file_contents.split("***")[2].lower()
+                book_content = file.read()
                 words = self.preprocessing(book_content)
 
 
