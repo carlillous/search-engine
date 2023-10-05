@@ -39,7 +39,7 @@ class DatabaseIndexer:
     def index_one(self, path, book_index):
         reader = Reader()
         book_name, words = reader.read_book(path)
-
+        print(f"[INDEXER]: Indexing book: \"{book_name}\"")
         self.cursor.execute('INSERT INTO books (book_name) VALUES (?)', (book_name,))
         book_id = self.cursor.lastrowid
 
@@ -53,10 +53,12 @@ class DatabaseIndexer:
         self.conn.commit()
 
     def index_all(self, directory):
+        print("[INDEXER]: ------------------ Indexing starting -------------------")
         for i, filename in enumerate(os.listdir(directory)):
             file = os.path.join(directory, filename)
             if os.path.isfile(file):
                 self.index_one(file, i)
+        print("[INDEXER]: -------------------- Indexing ended --------------------")
 
     def get_list_of_books_for_word(self, word):
         self.cursor.execute('''
@@ -67,34 +69,9 @@ class DatabaseIndexer:
             WHERE word_text = ?
         ''', (word,))
 
-        return self.cursor.fetchall()
-        # return [name[0] for name in self.cursor.fetchall()]
+        return [name[0] for name in self.cursor.fetchall()]
 
 
     def close(self):
         self.cursor.close()
         self.conn.close()
-
-    def get_books(self):
-        self.cursor.execute('''
-               SELECT *
-               FROM books
-           ''')
-
-        return self.cursor.fetchall()
-
-    def get_words(self):
-        self.cursor.execute('''
-               SELECT *
-               FROM words
-           ''')
-
-        return self.cursor.fetchall()
-
-    def get_books_words(self):
-        self.cursor.execute('''
-            SELECT *
-            FROM books_words
-           ''')
-
-        return self.cursor.fetchall()
