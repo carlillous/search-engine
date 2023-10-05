@@ -1,5 +1,7 @@
+import os
+import persistence
+
 from reader import Reader
-import os, persistence
 
 
 class DictionaryIndexer:
