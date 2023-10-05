@@ -2,7 +2,7 @@ from reader import Reader
 import os, persistence
 
 
-class Indexer:
+class DictionaryIndexer:
     persistence = persistence.JsonDictionaryPersistence()
 
     _book_names = {}
