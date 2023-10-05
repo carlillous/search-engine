@@ -2,6 +2,7 @@ import os
 import sqlite3
 from reader import Reader
 
+
 class DatabaseIndexer:
     def __init__(self, db_file = "indexer_sqlite.db"):
         self.conn = sqlite3.connect(db_file)
