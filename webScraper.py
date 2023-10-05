@@ -50,7 +50,7 @@ class WebScraper:
                 if not os.path.exists(content_path):
                     with open(content_path, "w", encoding="utf-8") as file:
                         file.write(ebook_content.split("***")[1])
-                    print(f"[SCRAPPER] Book {title} saved.")
+                    print(f"[SCRAPER]: Book {title} saved.")
 
                 result2 = re.search(r"(.+?)\*\*\* START OF THE PROJECT GUTENBERG EBOOK", content, re.DOTALL)
                 metadata = result2.group(1).strip()
@@ -60,4 +60,4 @@ class WebScraper:
                 if not os.path.exists(metadata_file):
                     with open(metadata_file, "w", encoding="utf-8") as file:
                         file.write(metadata)
-                    print(f"[SCRAPPER] Metadata of '{title}' saved as {metadata_name}.")
+                    print(f"[SCRAPER]: Metadata of '{title}' saved as {metadata_name}.")
