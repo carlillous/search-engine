@@ -12,8 +12,8 @@ class Reader:
         """Preprocess the text of the book and return it in a list"""
 
         tokens = nltk.word_tokenize(texto.replace('—',' ').replace('.', '').replace('_', '').replace('=','').replace('-',' '))
-        lista_filtrada = [cadena.lower() for cadena in tokens if any(letra.isalpha() for letra in cadena)]
-        words = [re.sub(r'^[^a-zA-Z\s]+|[^a-zA-Z\s]+$', '', words) for words in lista_filtrada if words not in self.stopwords_eng]
+        filtered = [cadena.lower() for cadena in tokens if any(letra.isalpha() for letra in cadena)]
+        words = [re.sub(r'^[^a-zA-Z\s]+|[^a-zA-Z\s]+$', '', words) for words in filtered if words not in self.stopwords_eng]
         return words
 
     def read_book(self, path):

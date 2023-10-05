@@ -48,8 +48,8 @@ class Scrapper:
             content_path = os.path.join(book_content_folder, bookname)
 
             if not os.path.exists(content_path):
-                with open(content_path, "w", encoding="utf-8") as archive:
-                    archive.write("\n".join(lines[start_index:]))
+                with open(content_path, "w", encoding="utf-8") as file:
+                    file.write("\n".join(lines[start_index:]))
                 print(f"Book {num_start} saved as {bookname}")
 
             metadata = "\n".join(lines[:start_index])
@@ -57,8 +57,8 @@ class Scrapper:
             metadata_file = os.path.join(metadata_folder, metadata_name)
 
             if not os.path.exists(metadata_file):
-                with open(metadata_file, "w", encoding="utf-8") as archivo_metadata:
-                    archivo_metadata.write(metadata)
+                with open(metadata_file, "w", encoding="utf-8") as file:
+                    file.write(metadata)
                 print(f"Metadata of '{title}' saved as {metadata_name}")
 
         num_start += 1
