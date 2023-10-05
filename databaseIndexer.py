@@ -39,19 +39,15 @@ class DatabaseIndexer:
     def index_one(self, path, book_index):
         reader = Reader()
         book_name, words = reader.read_book(path)
-        print(f"[INFO]: Indexing book \"{book_name}\"")
-        self.cursor.execute('INSERT INTO books (book_name) VALUES (?)', (book_name,))
 
+        self.cursor.execute('INSERT INTO books (book_name) VALUES (?)', (book_name,))
         book_id = self.cursor.lastrowid
-        # print(f"[INSERTED]: Book = \"{book_name}\" with id: {book_id}")
 
         for word in words:
-            # print(f"[INFO]: inserting word = \"{word}\" into book = \"{book_name}\"")
             self.cursor.execute('INSERT OR IGNORE INTO words (word_text) VALUES (?)', (word,))
 
             self.cursor.execute("SELECT word_id FROM words WHERE word_text = ?", (word,))
             word_id = self.cursor.fetchone()[0]
-            print(f"[INSERTED]: word = \"{word}\", id = {word_id}, book = \"{book_name}\"")
 
             self.cursor.execute('INSERT OR IGNORE INTO books_words VALUES (?, ?)', (book_id, word_id))
         self.conn.commit()
