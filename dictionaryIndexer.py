@@ -1,5 +1,7 @@
+import os
+import persistence
+
 from reader import Reader
-import os, persistence
 
 
 class DictionaryIndexer:
@@ -12,7 +14,7 @@ class DictionaryIndexer:
         reader = Reader()
         book_name, words = reader.read_book(path)
         self._book_names[index] = book_name
-
+        print(f"[INDEXER]: Indexing book: \"{book_name}\"")
         for word in words:
             if word not in self._word_indexes:
                 self._word_indexes[word] = {index}
@@ -20,21 +22,21 @@ class DictionaryIndexer:
                 self._word_indexes[word].add(index)
 
     def index_all(self, directory):
-        """
-        """
+        print("[INDEXER]: ------------------ Indexing starting -------------------")
         for i, filename in enumerate(os.listdir(directory)):
             file = os.path.join(directory, filename)
             # checking if it is a file
             if os.path.isfile(file):
                 self._index_one(file, i)
+        print("[INDEXER]: -------------------- Indexing ended --------------------")
 
-    def get_indexes_of_word(self, word):
+    def _get_indexes_of_word(self, word):
         return self._word_indexes[word]
 
-    def get_book_name(self, index):
+    def _get_book_name(self, index):
         return self._book_names[index]
 
-    def get_book_names_for_indexes(self, indexes):
+    def _get_book_names_for_indexes(self, indexes):
         book_names = []
         for index in indexes:
             book_names.append(self._book_names[index])
@@ -51,3 +53,7 @@ class DictionaryIndexer:
 
         loaded_word_indexes = self.persistence.load_dict(word_index_path)
         self._word_indexes = {key: set(value) for key, value in loaded_word_indexes.items()}
+
+    def get_list_of_books_for_word(self, word):
+        indexes = self._get_indexes_of_word(word)
+        return self._get_book_names_for_indexes(indexes)
