@@ -4,7 +4,7 @@ from reader import Reader
 
 
 class DatabaseIndexer:
-    def __init__(self, db_file = "indexer_sqlite.db"):
+    def __init__(self, db_file="indexer_sqlite.db"):
         self.conn = sqlite3.connect(db_file)
         self.cursor = self.conn.cursor()
         self._create_tables()
@@ -35,7 +35,6 @@ class DatabaseIndexer:
         ''')
 
         self.conn.commit()
-
 
     def index_one(self, path, book_index):
         reader = Reader()
@@ -71,7 +70,6 @@ class DatabaseIndexer:
         ''', (word,))
 
         return [name[0] for name in self.cursor.fetchall()]
-
 
     def close(self):
         self.cursor.close()
