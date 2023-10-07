@@ -28,8 +28,10 @@ class WebScraper:
             if not os.path.exists(metadata_folder):
                 os.makedirs(metadata_folder)
 
-        for i in range(self.n):
+        i = 0
+        while i < self.n:
             num_str = str(random.randint(1, 40000))
+            print(num_str)
             url = "https://www.gutenberg.org/cache/epub/" + num_str + "/pg" + num_str + ".txt"
 
             response = requests.get(url)
@@ -47,6 +49,24 @@ class WebScraper:
                         title = line.replace("Title:", "").strip()
                         break
 
+                book_name = title + ".txt"
+                content_path = os.path.join(book_content_folder, book_name)
+
+                result_1 = re.search(r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK(.*)", content, re.DOTALL)
+                result_2 = re.search(r"\*\*\* START OF THIS PROJECT GUTENBERG EBOOK(.*)", content, re.DOTALL)
+
+                if result_1:
+                    ebook_content = result_1.group(1).strip()
+                elif result_2:
+                    ebook_content = result_2.group(1).strip()
+                else:
+                    continue
+
+                if not os.path.exists(content_path):
+                    with open(content_path, "w", encoding="utf-8") as file:
+                        file.write(ebook_content.split("***")[1])
+                    print(f"[SCRAPER]: Book {title} saved.")
+
                 if self.md_option:
                     metadata_name = "md_" + title + ".txt"
                     metadata_file = os.path.join(metadata_folder, metadata_name)
@@ -55,13 +75,6 @@ class WebScraper:
                             file.write(metadata)
                         print(f"[SCRAPER]: Metadata of '{title}' saved as {metadata_name}.")
 
-                book_name = title + ".txt"
-                content_path = os.path.join(book_content_folder, book_name)
-
-                result = re.search(r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK(.*)", content, re.DOTALL)
-                ebook_content = result.group(1).strip()
-
-                if not os.path.exists(content_path):
-                    with open(content_path, "w", encoding="utf-8") as file:
-                        file.write(ebook_content.split("***")[1])
-                    print(f"[SCRAPER]: Book {title} saved.")
+                i += 1
+            else:
+                print(f"[SCRAPER]: There is no book with that number. ")
