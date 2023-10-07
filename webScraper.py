@@ -13,6 +13,7 @@ class WebScraper:
         self._start()
 
     def _start(self):
+        print(f"[SCRAPER] STARTING.")
         current_directory = os.path.dirname(os.path.abspath(__file__))
         new_directory_path = os.path.join(current_directory, self.directory_name)
 
@@ -30,8 +31,7 @@ class WebScraper:
 
         i = 0
         while i < self.n:
-            num_str = str(random.randint(1, 40000))
-            print(num_str)
+            num_str = str(random.randint(1, 70000))
             url = "https://www.gutenberg.org/cache/epub/" + num_str + "/pg" + num_str + ".txt"
 
             response = requests.get(url)
@@ -48,9 +48,11 @@ class WebScraper:
                     if line.startswith("Title:"):
                         title = line.replace("Title:", "").strip()
                         break
+                chars = str.maketrans({':': ' ', ' ': '_', ',': '', '.': '',
+                                       '(': ' ', ')': '', '-': '', '/': '',
+                                       ';': '', '"': '', '—': '', })
 
-                book_name = title + ".txt"
-                content_path = os.path.join(book_content_folder, book_name)
+                content_path = os.path.join(book_content_folder, title.translate(chars)+".txt")
 
                 result_1 = re.search(r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK(.*)", content, re.DOTALL)
                 result_2 = re.search(r"\*\*\* START OF THIS PROJECT GUTENBERG EBOOK(.*)", content, re.DOTALL)
@@ -68,7 +70,7 @@ class WebScraper:
                     print(f"[SCRAPER]: Book {title} saved.")
 
                 if self.md_option:
-                    metadata_name = "md_" + title + ".txt"
+                    metadata_name = "md_" + title.translate(chars) + ".txt"
                     metadata_file = os.path.join(metadata_folder, metadata_name)
                     if not os.path.exists(metadata_file):
                         with open(metadata_file, "w", encoding="utf-8") as file:
@@ -78,3 +80,4 @@ class WebScraper:
                 i += 1
             else:
                 print(f"[SCRAPER]: There is no book with that number. ")
+        print(f"[SCRAPER] SUCCESSFULLY COMPLETED.")
