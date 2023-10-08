@@ -6,14 +6,13 @@ import random
 
 class WebScraper:
 
-    def __init__(self, number, d_name="datalake", md=True):
+    def __init__(self, number, d_name="datalake", metadata=True):
         self.n = number
         self.directory_name = d_name
-        self.md_option = md
-        self._start()
+        self.metadata_option = metadata
 
-    def _start(self):
-        print(f"[SCRAPER] STARTING.")
+    def start(self):
+        print(f"[SCRAPER]: Starting...")
         current_directory = os.path.dirname(os.path.abspath(__file__))
         new_directory_path = os.path.join(current_directory, self.directory_name)
 
@@ -24,7 +23,7 @@ class WebScraper:
         if not os.path.exists(book_content_folder):
             os.makedirs(book_content_folder)
 
-        if self.md_option:
+        if self.metadata_option:
             metadata_folder = os.path.join(new_directory_path, "metadata")
             if not os.path.exists(metadata_folder):
                 os.makedirs(metadata_folder)
@@ -50,7 +49,7 @@ class WebScraper:
                         break
                 chars = str.maketrans({':': ' ', ' ': '_', ',': '', '.': '',
                                        '(': ' ', ')': '', '-': '', '/': '',
-                                       ';': '', '"': '', '—': '', })
+                                       ';': '', '"': '', '—': '', '?': '' })
 
                 content_path = os.path.join(book_content_folder, title.translate(chars)+".txt")
 
@@ -69,7 +68,7 @@ class WebScraper:
                         file.write(ebook_content.split("***")[1])
                     print(f"[SCRAPER]: Book {title} saved.")
 
-                if self.md_option:
+                if self.metadata_option:
                     metadata_name = "md_" + title.translate(chars) + ".txt"
                     metadata_file = os.path.join(metadata_folder, metadata_name)
                     if not os.path.exists(metadata_file):
@@ -80,4 +79,4 @@ class WebScraper:
                 i += 1
             else:
                 print(f"[SCRAPER]: There is no book with that number. ")
-        print(f"[SCRAPER] SUCCESSFULLY COMPLETED.")
+        print(f"[SCRAPER]: Successfully completed.")
