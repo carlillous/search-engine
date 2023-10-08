@@ -31,6 +31,7 @@ class WebScraper:
         i = 0
         while i < self.n:
             num_str = str(random.randint(1, 70000))
+            print(num_str)
             url = "https://www.gutenberg.org/cache/epub/" + num_str + "/pg" + num_str + ".txt"
 
             response = requests.get(url)
@@ -38,8 +39,15 @@ class WebScraper:
             if response.status_code == 200:
                 content = response.text
 
-                result2 = re.search(r"(.+?)\*\*\* START OF THE PROJECT GUTENBERG EBOOK", content, re.DOTALL)
-                metadata = result2.group(1).strip()
+                md_pattern1 = re.search(r"(.+?)\*\*\* START OF THE PROJECT GUTENBERG EBOOK", content, re.DOTALL)
+                if md_pattern1:
+                    metadata = md_pattern1.group(1).strip()
+                else:
+                    md_pattern1 = re.search(r"(.+?)\*\*\* START OF THIS PROJECT GUTENBERG EBOOK", content, re.DOTALL)
+                    if md_pattern1:
+                        metadata = md_pattern1.group(1).strip()
+                    else:
+                        continue
 
                 lines = metadata.split("\n")
                 title = None
