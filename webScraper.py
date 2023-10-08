@@ -31,7 +31,6 @@ class WebScraper:
         i = 0
         while i < self.n:
             num_str = str(random.randint(1, 70000))
-            print(num_str)
             url = "https://www.gutenberg.org/cache/epub/" + num_str + "/pg" + num_str + ".txt"
 
             response = requests.get(url)
