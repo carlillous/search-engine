@@ -1,5 +1,5 @@
 import os
-import persistence
+from json_dict_persistence import JsonDictionaryPersistence
 
 from reader import Reader
 
@@ -7,7 +7,7 @@ from reader import Reader
 class DictionaryIndexer:
 
     def __init__(self, book_names_path="book_names.json", word_indexes_path="word_indexes.json"):
-        self.persistence = persistence.JsonDictionaryPersistence()
+        self.persistence = JsonDictionaryPersistence()
 
         self._book_names_path = book_names_path
         self._word_indexes_path = word_indexes_path
