@@ -1,5 +1,5 @@
-from databaseIndexer import DatabaseIndexer
-from dictionaryIndexer import DictionaryIndexer
+from database_indexer import DatabaseIndexer
+from dictionary_indexer import DictionaryIndexer
 import pytest
 
 
