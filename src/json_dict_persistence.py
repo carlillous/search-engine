@@ -1,5 +1,6 @@
 import json
 
+
 class JsonDictionaryPersistence:
 
     def dump_dict(self, path, dictionary):

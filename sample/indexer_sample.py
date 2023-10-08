@@ -1,5 +1,5 @@
-from databaseIndexer import DatabaseIndexer
-from dictionaryIndexer import DictionaryIndexer
+from src.database_indexer import DatabaseIndexer
+from src.dictionary_indexer import DictionaryIndexer
 
 BOOKS_PATH_MAC = "../datalake/book_content"
 BOOKS_PATH_WIN = "???"
