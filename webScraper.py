@@ -12,7 +12,7 @@ class WebScraper:
         self.metadata_option = metadata
 
     def start(self):
-        print(f"[SCRAPER]: Starting...")
+        print(f"[SCRAPER]:------------------- Starting -------------------")
         current_directory = os.path.dirname(os.path.abspath(__file__))
         new_directory_path = os.path.join(current_directory, self.directory_name)
 
@@ -87,4 +87,4 @@ class WebScraper:
                 i += 1
             else:
                 print(f"[SCRAPER]: There is no book with that number. ")
-        print(f"[SCRAPER]: Successfully completed.")
+        print(f"[SCRAPER]:---------- Successfully completed ----------")
