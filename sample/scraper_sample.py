@@ -1,4 +1,4 @@
-from webScraper import WebScraper
+from web_scraper import WebScraper
 
 """
 Sample usage of the web Scraper.
