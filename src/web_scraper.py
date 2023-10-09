@@ -13,18 +13,18 @@ class WebScraper:
 
     def start(self):
         print(f"[SCRAPER]:------------------- Starting -------------------")
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        new_directory_path = os.path.join(current_directory, self.directory_name)
+        working_directory = os.getcwd()
+        datalake_directory = os.path.join(working_directory, self.directory_name)
 
         if not os.path.exists(self.directory_name):
-            os.makedirs(new_directory_path)
+            os.makedirs(datalake_directory)
 
-        book_content_folder = os.path.join(new_directory_path, "book_content")
+        book_content_folder = os.path.join(datalake_directory, "book_content")
         if not os.path.exists(book_content_folder):
             os.makedirs(book_content_folder)
 
         if self.metadata_option:
-            metadata_folder = os.path.join(new_directory_path, "metadata")
+            metadata_folder = os.path.join(datalake_directory, "metadata")
             if not os.path.exists(metadata_folder):
                 os.makedirs(metadata_folder)
 
