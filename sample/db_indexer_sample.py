@@ -16,11 +16,3 @@ db_indexer = DatabaseIndexer()
 db_indexer.index_all(BOOKS_PATH)
 print(db_indexer.get_list_of_books_for_word(QUERY_WORD))
 db_indexer.close()
-
-"""
-Sample usage of dictionary indexer.
-"""
-
-dict_indexer = DictionaryIndexer()
-dict_indexer.index_all(BOOKS_PATH)
-print(dict_indexer.get_list_of_books_for_word(QUERY_WORD))
