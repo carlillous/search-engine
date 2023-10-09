@@ -14,3 +14,4 @@ Sample usage of dictionary indexer.
 dict_indexer = DictionaryIndexer()
 dict_indexer.index_all(BOOKS_PATH)
 print(dict_indexer.get_list_of_books_for_word(QUERY_WORD))
+dict_indexer.get_inverted_indexes()
