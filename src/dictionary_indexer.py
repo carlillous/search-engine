@@ -74,3 +74,6 @@ class DictionaryIndexer:
     def get_list_of_books_for_word(self, word):
         indexes = self._get_indexes_of_word(word)
         return self._get_book_names_for_indexes(indexes)
+
+    def get_inverted_indexes(self):
+        return self._word_indexes
