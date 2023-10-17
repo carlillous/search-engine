@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Search_engine</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>edu.ulpgc.bd</groupId>
+    <artifactId>search-engine</artifactId>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>Crawler</module>
         <module>Indexer</module>
-        <module>Query</module>
+        <module>SearchQuery</module>
     </modules>
 
     <properties>
