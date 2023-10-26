@@ -4,3 +4,4 @@
 datalake
 *.DS_Store
 *target*
+*InvertedIndexRepository*
