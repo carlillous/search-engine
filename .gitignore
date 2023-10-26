@@ -3,3 +3,4 @@
 *.db
 datalake
 *.DS_Store
+*target*
