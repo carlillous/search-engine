@@ -14,7 +14,7 @@ public class FileDataMart implements DataMart {
 
 
     @Override
-    public List<Integer> getInvertedIndexOf(String word) {
+    public List<Integer> getInvertedIndexOfWord(String word) {
         File indexFile = new File(path, word + extension);
         return readListOfIntegersFromFile(indexFile);
     }
@@ -38,7 +38,7 @@ public class FileDataMart implements DataMart {
 
     @Override
     public void addBookIndexToWord(String word, int bookIndex) {
-        List<Integer> indexListOfWord = getInvertedIndexOf(word);
+        List<Integer> indexListOfWord = getInvertedIndexOfWord(word);
         List<Integer> updatedIndexListOfWord = addIndexToListUnique(indexListOfWord, bookIndex);
         saveInvertedIndexListOfWordToFile(word, updatedIndexListOfWord);
     }

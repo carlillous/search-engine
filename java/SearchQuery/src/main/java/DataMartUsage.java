@@ -5,7 +5,7 @@ public class DataMartUsage {
         DataMart dataMart = new FileDataMart();
 
         String word = "hello";
-        List<Integer> invertedIndexOfWord = dataMart.getInvertedIndexOf(word);
+        List<Integer> invertedIndexOfWord = dataMart.getInvertedIndexOfWord(word);
 
         System.out.println(invertedIndexOfWord);
     }

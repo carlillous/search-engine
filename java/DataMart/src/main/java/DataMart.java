@@ -6,7 +6,7 @@ public interface DataMart {
      * @param word The word to get the inverted indexes for.
      * @return The inverted list of book indexes for the given word.
      */
-    List<Integer> getInvertedIndexOf(String word);
+    List<Integer> getInvertedIndexOfWord(String word);
 
     /**
      * Add an index of a book to a word.
