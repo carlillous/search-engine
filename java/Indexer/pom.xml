@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>edu.ulpgc.bd</groupId>
-            <artifactId>DataMart</artifactId>
+            <artifactId>data-mart</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
