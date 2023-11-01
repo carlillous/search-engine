@@ -2,3 +2,6 @@
 *.json
 *.db
 datalake
+*.DS_Store
+*target*
+*InvertedIndexRepository*
