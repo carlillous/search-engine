@@ -15,9 +15,9 @@ public interface BookReader {
     String getPathSeparator();
 
     /**
-     * Read a book from a given path and return a list containing the book name and its words.
+     * Read a book from a given path and return a Book object containing the book name and its words.
      * @param path The path to the book file.
-     * @return A list containing the book name and its words.
+     * @return A Book object containing the book name and its words.
      */
-    List<Object> readBook(String path);
+    Book readBook(String path);
 }
