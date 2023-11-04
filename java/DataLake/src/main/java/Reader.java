@@ -7,13 +7,14 @@ import java.util.Set;
 
 public class Reader implements BookReader {
     private Set<String> stopwordsEng = new HashSet<>();
+    private DataIndexHandler handler = new DataIndexHandler();
 
     public Reader() {
         loadStopwords();
     }
 
     private void loadStopwords() {
-        try (FileInputStream stopwordStream = new FileInputStream("src/files/en-stopwords.txt");
+        try (FileInputStream stopwordStream = new FileInputStream("C:\\Users\\Carlos\\Documents\\PycharmProjects\\BD\\search-engine\\java\\DataLake\\src\\files\\en-stopwords.txt");
              InputStreamReader stopwordStreamReader = new InputStreamReader(stopwordStream, StandardCharsets.UTF_8);
              BufferedReader stopwordBufferedReader = new BufferedReader(stopwordStreamReader)) {
 
@@ -76,7 +77,10 @@ public class Reader implements BookReader {
             e.printStackTrace();
         }
 
-        return new Book(bookName, words);
+        Book book = new Book(bookName,words);
+        handler.addBook(book.getIndex(), book.getName());
+
+        return book;
     }
 
 }
