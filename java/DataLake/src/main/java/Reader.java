@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 public class Reader implements BookReader {
     private Set<String> stopwordsEng = new HashSet<>();
     private DataIndexHandler handler = new DataIndexHandler();
@@ -57,10 +58,10 @@ public class Reader implements BookReader {
 
     @Override
     public Book readBook(String path) {
-        String bookName;
+        String fileName,bookName;
         List<String> words = new ArrayList<>();
         File file = new File(path);
-        bookName = file.getName();
+        fileName = file.getName();
 
         try (FileInputStream fileStream = new FileInputStream(path);
              InputStreamReader fileStreamReader = new InputStreamReader(fileStream, StandardCharsets.UTF_8);
@@ -76,11 +77,20 @@ public class Reader implements BookReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        bookName = this.extractBookName(fileName);
         Book book = new Book(bookName,words);
         handler.addBook(book.getIndex(), book.getName());
 
         return book;
+    }
+
+    public static String extractBookName(String fileName) {
+        String[] parts = fileName.split("\\)");
+        String extractedName = parts[1].replace("_", " ");
+        extractedName = extractedName.substring(0, extractedName.length() - 4);
+        extractedName = extractedName.substring(0, 1).toUpperCase() + extractedName.substring(1);
+
+        return extractedName;
     }
 
 }
