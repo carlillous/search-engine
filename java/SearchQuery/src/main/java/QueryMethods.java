@@ -3,7 +3,7 @@ import java.util.List;
 public class QueryMethods {
 
     private DataMart dataMart = new FileDataMart();
-    private DataIndexHandler dataLake = new DataIndexHandler();
+    private DataLake dataLake = new DataLake();
 
     public void queryWord(String word){
         System.out.println("The word" + word + "appears in:");

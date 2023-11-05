@@ -1,16 +1,19 @@
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.util.List;
 
 public class Indexer {
 
     private DataMart dataMart;
+    private DataLake dataLake;
 
-    public Indexer() {
+    public Indexer(DataLake dl) {
         dataMart = new FileDataMart();
+        dataLake = dl;
     }
 
     public void indexOne(String path) {
-        Reader reader = new Reader();
+        Reader reader = new Reader(dataLake);
         Book book = reader.readBook(path);
         int index = book.getIndex();
         String bookName = book.getName();

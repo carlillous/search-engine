@@ -16,14 +16,6 @@ public class DataLake {
         bookNames = persistance.load();
     }
 
-
-    public DataLake(String directoryName) {
-        this.path = directoryName + "/";
-        this.createFolderIfNotExists(this.path);
-        persistance = new BookPersistance(this.path);
-        bookNames = persistance.load();
-    }
-
     public void addBook(int bookIndex, String bookTitle) {
         bookNames.put(bookIndex, bookTitle);
         persistance.save(bookNames);
