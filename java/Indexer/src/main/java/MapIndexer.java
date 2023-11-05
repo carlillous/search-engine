@@ -1,16 +1,11 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 public class MapIndexer {
 
-    private Map<String, HashSet<Integer>> wordIndexes;
     private DataMart dataMart;
 
     public MapIndexer() {
-        wordIndexes = new HashMap<>();
         dataMart = new FileDataMart();
     }
 
@@ -22,10 +17,6 @@ public class MapIndexer {
         List<String> words = book.getWords();
         System.out.println("[INDEXER]: Indexing book: \"" + bookName + "\"");
         for (String word : words) {
-            if (!wordIndexes.containsKey(word)) {
-                wordIndexes.put(word, new HashSet<>());
-            }
-            wordIndexes.get(word).add(index);
             dataMart.addBookIndexToWord(word,index);
         }
     }
