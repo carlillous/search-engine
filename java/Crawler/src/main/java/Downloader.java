@@ -1,8 +1,7 @@
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
@@ -15,7 +14,7 @@ public class Downloader {
                 String numStr = String.valueOf(randomNumber);
                 String bookUrl = "https://www.gutenberg.org/cache/epub/" + numStr + "/pg" + numStr + ".txt";
 
-                if (isBookInDataLake(numStr)) {
+                if (DataLake.isBookInDataLake(numStr)) {
                     System.out.println("Book is already downloaded.");
                 }else{
                     if (downloadBook(bookUrl, numStr)) {
@@ -27,22 +26,6 @@ public class Downloader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean isBookInDataLake(String i) {
-        File dir = new File("datalake");
-
-        File[] files = dir.listFiles();
-
-        if (files != null) {
-            for (File f : files) {
-                String fileName = f.getName();
-                if (fileName.contains("(" + i + ")")) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private boolean downloadBook(String bookUrl, String i) {
@@ -63,7 +46,7 @@ public class Downloader {
 
                 String bookContent = ContentManager.getBookContent(book);
 
-                this.saveToFile(fileName, bookContent);
+                DataLake.saveToFile(fileName, bookContent);
                 System.out.println("Libro guardado: " + fileName);
                 return true;
             } else {
@@ -75,11 +58,4 @@ public class Downloader {
         }
     }
 
-    private void saveToFile(String fileName, String content) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
