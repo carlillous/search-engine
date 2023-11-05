@@ -20,6 +20,7 @@ public class DataLake {
     public DataLake(String directory) {
         this.path = directory;
         this.createFolderIfNotExists(this.path);
+        persistance = new BookPersistance(this.path);
         bookNames = persistance.load();
     }
 

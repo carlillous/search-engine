@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 public class ReaderTest {
-    
+
     @Test
     public void testReadBook() {
         DataLake datalake = new DataLake();
