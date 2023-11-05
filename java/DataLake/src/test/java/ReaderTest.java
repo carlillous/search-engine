@@ -6,7 +6,7 @@ public class ReaderTest {
     @Test
     public void testReadBook() {
         Reader reader = new Reader();
-        String filePath = "files/BOOK";
+        String filePath = "src/files/pg72005.txt";
         Book bookData = reader.readBook(filePath);
 
         assertNotNull("Book data should not be null.", bookData);
