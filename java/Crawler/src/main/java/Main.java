@@ -1,6 +1,8 @@
+
 public class Main {
     public static void main(String[] args) {
-        Controller crawler = new Controller();
+        DataLake dataLake = new DataLake();
+        Controller crawler = new Controller(dataLake);
         crawler.start();
     }
 }

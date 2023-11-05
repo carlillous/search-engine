@@ -8,8 +8,8 @@ public class Controller {
     DataLake dataLake ;
     Downloader downloader;
 
-    public Controller(){
-        this.dataLake = new DataLake();
+    public Controller(DataLake dl){
+        this.dataLake = dl;
         this.downloader = new Downloader(dataLake);
         this.start();
     }
