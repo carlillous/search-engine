@@ -1,12 +1,17 @@
 import org.junit.*;
+
+import javax.xml.crypto.Data;
+
 import static org.junit.Assert.*;
 import java.util.List;
 
 public class ReaderTest {
+    
     @Test
     public void testReadBook() {
-        Reader reader = new Reader();
-        String filePath = "src/files/pg72005.txt";
+        DataLake datalake = new DataLake();
+        Reader reader = new Reader(datalake);
+        String filePath = "datalake/src/files/(30633)Projet_de_la_constitution_française_de_1791.txt";
         Book bookData = reader.readBook(filePath);
 
         assertNotNull("Book data should not be null.", bookData);

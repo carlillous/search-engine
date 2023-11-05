@@ -7,17 +7,17 @@ import java.util.Map;
 
 public class BookPersistance {
 
-    private DataLake datalake;
+    private String path;
 
-    public BookPersistance(DataLake dl){
-        this.datalake = dl;
+    public BookPersistance(String directory){
+        this.path = directory;
     }
 
 
     public Map<Integer,String> load() {
 
         Map<Integer, String> map = null;
-        String filePath = datalake.getDataLakePath() + "/books.json";
+        String filePath = this.path + "/books.json";
         File file = new File(filePath);
 
         if (file.exists()) {
@@ -42,7 +42,7 @@ public class BookPersistance {
         try {
             String json = objectMapper.writeValueAsString(books);
 
-            String filePath = datalake.getDataLakePath() + "/books.json";
+            String filePath = this.path + "/books.json";
 
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(json);

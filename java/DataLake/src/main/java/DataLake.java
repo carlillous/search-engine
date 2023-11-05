@@ -7,16 +7,19 @@ import java.util.Map;
 public class DataLake {
     private String path;
     private Map<Integer, String> bookNames;
-    private BookPersistance persistance = new BookPersistance();
+    private BookPersistance persistance;
 
     public DataLake() {
-        this.path = "datalake/files";
+        this.path = "dl";
+        this.createFolderIfNotExists(this.path);
+        persistance = new BookPersistance(this.path);
         bookNames = persistance.load();
     }
 
 
     public DataLake(String directory) {
         this.path = directory;
+        this.createFolderIfNotExists(this.path);
         bookNames = persistance.load();
     }
 
@@ -25,8 +28,15 @@ public class DataLake {
         persistance.save(bookNames);
     }
 
+    private void createFolderIfNotExists(String folderName) {
+        File folder = new File(folderName);
+        if (!folder.exists()) {
+            boolean created = folder.mkdir();
+        }
+    }
+
     public boolean isBookInDataLake(String i) {
-        File dir = new File("datalake/files");
+        File dir = new File(this.path);
         File[] files = dir.listFiles();
 
         if (files != null) {
