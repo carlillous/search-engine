@@ -9,7 +9,7 @@ public class Downloader {
     private DataLake dataLake;
 
     public Downloader(DataLake dl){
-        dataLake = new DataLake(dl.getDataLakePath());
+        dataLake = dl;
     }
 
     public void run() {
@@ -23,9 +23,9 @@ public class Downloader {
                     System.out.println("Book is already downloaded.");
                 }else{
                     if (downloadBook(bookUrl, numStr)) {
-                        System.out.println("Descarga completa.");
+                        System.out.println("Download completed.");
                     } else {
-                        System.out.println("No se encontró el libro en el enlace: " + bookUrl);
+                        System.out.println("Book not found: " + bookUrl);
                     }
                 }
         } catch (Exception e) {
@@ -43,16 +43,12 @@ public class Downloader {
                 String title = ContentManager.getBookTitle(book);
                 String finalTitle = ContentManager.cleanFilename(title);
 
-                String fileName = dataLake.getDataLakePath() + "(" + i + ")"+finalTitle+".txt";
-                File dataLakeDir = new File(dataLake.getDataLakePath());
-                if (!dataLakeDir.exists()) {
-                    dataLakeDir.mkdirs();
-                }
+                String fileName =  "(" + i + ")"+finalTitle+".txt";
 
                 String bookContent = ContentManager.getBookContent(book);
 
-                dataLake.saveToFile(fileName, bookContent);
-                System.out.println("Libro guardado: " + fileName);
+                dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
+                System.out.println("Book saved: " + fileName);
                 return true;
             } else {
                 return false;

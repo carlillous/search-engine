@@ -10,15 +10,15 @@ public class DataLake {
     private BookPersistance persistance;
 
     public DataLake() {
-        this.path = "dl";
+        this.path = "dl/";
         this.createFolderIfNotExists(this.path);
         persistance = new BookPersistance(this.path);
         bookNames = persistance.load();
     }
 
 
-    public DataLake(String directory) {
-        this.path = directory;
+    public DataLake(String directoryName) {
+        this.path = directoryName + "/";
         this.createFolderIfNotExists(this.path);
         persistance = new BookPersistance(this.path);
         bookNames = persistance.load();

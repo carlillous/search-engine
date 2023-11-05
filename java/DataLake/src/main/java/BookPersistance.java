@@ -17,7 +17,7 @@ public class BookPersistance {
     public Map<Integer,String> load() {
 
         Map<Integer, String> map = null;
-        String filePath = this.path + "/books.json";
+        String filePath = this.path + "books.json";
         File file = new File(filePath);
 
         if (file.exists()) {
