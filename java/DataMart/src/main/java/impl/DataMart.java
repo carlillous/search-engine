@@ -1,3 +1,5 @@
+package impl;
+
 import java.util.List;
 
 public interface DataMart {
@@ -6,10 +8,10 @@ public interface DataMart {
      * @param word The word to get the inverted indexes for.
      * @return The inverted list of book indexes for the given word.
      */
-    List<Integer> getInvertedIndexOfWord(String word);
+    List<Integer> getInvertedIndexOf(String word);
 
     /**
-     * Add an index of a book to a word.
+     * Add an index of a book to a word. Inserting non-unique book index does not insert.
      * @param word The word to add the book index to.
      * @param bookIndex The index of the book to add to the word.
      */
