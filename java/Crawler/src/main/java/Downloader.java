@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.util.Random;
 
 public class Downloader {
+    private DataLake dataLake;
+
+    public Downloader(DataLake dl){
+        dataLake = new DataLake(dl.getDataLakePath());
+    }
 
     public void run() {
         try {
@@ -14,7 +19,7 @@ public class Downloader {
                 String numStr = String.valueOf(randomNumber);
                 String bookUrl = "https://www.gutenberg.org/cache/epub/" + numStr + "/pg" + numStr + ".txt";
 
-                if (DataLake.isBookInDataLake(numStr)) {
+                if (dataLake.isBookInDataLake(numStr)) {
                     System.out.println("Book is already downloaded.");
                 }else{
                     if (downloadBook(bookUrl, numStr)) {
@@ -38,15 +43,15 @@ public class Downloader {
                 String title = ContentManager.getBookTitle(book);
                 String finalTitle = ContentManager.cleanFilename(title);
 
-                String fileName = "datalake/files/(" + i + ")"+finalTitle+".txt";
-                File dataLakeDir = new File("datalake/files");
+                String fileName = dataLake.getDataLakePath() + "(" + i + ")"+finalTitle+".txt";
+                File dataLakeDir = new File(dataLake.getDataLakePath());
                 if (!dataLakeDir.exists()) {
                     dataLakeDir.mkdirs();
                 }
 
                 String bookContent = ContentManager.getBookContent(book);
 
-                DataLake.saveToFile(fileName, bookContent);
+                dataLake.saveToFile(fileName, bookContent);
                 System.out.println("Libro guardado: " + fileName);
                 return true;
             } else {

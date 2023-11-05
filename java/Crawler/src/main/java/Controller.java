@@ -1,12 +1,16 @@
+import javax.xml.crypto.Data;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
-    Downloader downloader = new Downloader();
+    DataLake dataLake ;
+    Downloader downloader;
 
     public Controller(){
+        this.dataLake = new DataLake();
+        this.downloader = new Downloader(dataLake);
         this.start();
     }
 
@@ -31,5 +35,11 @@ public class Controller {
         }
 
     }
+
+    public DataLake getDataLake(){
+        return this.dataLake;
+    }
+
+
 
 }

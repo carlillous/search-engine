@@ -24,6 +24,12 @@
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
         </dependency>
+        <dependency>
+            <groupId>edu.ulpgc.bd</groupId>
+            <artifactId>DataLake</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

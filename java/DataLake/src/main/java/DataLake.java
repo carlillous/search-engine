@@ -1,11 +1,11 @@
 import java.util.Map;
 
-public class DataIndexHandler {
+public class DataLake {
 
     private Map<Integer, String> bookNames;
     private BookPersistance persistance = new BookPersistance();
 
-    public DataIndexHandler() {
+    public DataLake() {
         bookNames = persistance.load();
     }
 
