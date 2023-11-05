@@ -1,11 +1,11 @@
 import java.io.File;
 import java.util.List;
 
-public class MapIndexer {
+public class Indexer {
 
     private DataMart dataMart;
 
-    public MapIndexer() {
+    public Indexer() {
         dataMart = new FileDataMart();
     }
 
