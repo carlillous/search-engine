@@ -8,9 +8,10 @@ import java.util.Set;
 
 public class Reader implements BookReader {
     private Set<String> stopwordsEng = new HashSet<>();
-    private DataIndexHandler handler = new DataIndexHandler();
+    private DataLake datalake;
 
-    public Reader() {
+    public Reader(DataLake dlake) {
+        this.datalake = dlake;
         loadStopwords();
     }
 
@@ -79,7 +80,7 @@ public class Reader implements BookReader {
         }
         bookName = this.extractBookName(fileName);
         Book book = new Book(bookName,words);
-        handler.addBook(book.getIndex(), book.getName());
+        datalake.addBook(book.getIndex(), book.getName());
 
         return book;
     }
