@@ -13,5 +13,6 @@
         <module>Indexer</module>
         <module>SearchQuery</module>
         <module>DataMart</module>
+        <module>DataLake</module>
     </modules>
 </project>
