@@ -37,5 +37,10 @@ public class Indexer {
         System.out.println("[INDEXER]: -------------------- Indexing ended --------------------");
     }
 
+    public void indexQueue(){
+        new Receiver();
+
+    }
+
 }
 
