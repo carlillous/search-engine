@@ -6,6 +6,7 @@ public class SparkApp {
     public static void main(String[] args) {
         spark.Spark.get("/search/:word", (request, response) -> {
             String word = request.params(":word");
+
             System.out.println("[API-APP]: Searched: " + word);
 
             response.type("application/json");
