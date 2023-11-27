@@ -27,7 +27,8 @@ public class Indexer {
         }
     }
 
-    public void indexAll(String directory) {
+    public void indexAll() {
+        String directory = dataLake.getDataLakePath();
         System.out.println("[INDEXER]: ------------------ Indexing starting -------------------");
         File[] files = new File(directory).listFiles();
         if (files != null) {
