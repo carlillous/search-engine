@@ -12,7 +12,7 @@ public class FileDataMart implements DataMart {
 
     public FileDataMart() {
         String path = "InvertedIndexRepository";
-        String extension = ".bin";
+        String extension = ".dat";
         bookIndexWordPersistence = new BookIndexWordPersistence(path, extension);
     }
 
