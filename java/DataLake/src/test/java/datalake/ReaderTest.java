@@ -1,6 +1,9 @@
-import org.junit.*;
+package datalake;
 
-import javax.xml.crypto.Data;
+import datalake.Book;
+import datalake.DataLake;
+import datalake.Reader;
+import org.junit.*;
 
 import static org.junit.Assert.*;
 import java.util.List;

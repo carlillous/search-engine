@@ -4,8 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileListHandler {
-    public static List<Integer> read(File file) {
+public class BinaryListPersistence implements ListPersistence {
+
+    @Override
+    public List<Integer> read(File file) {
         ObjectInputStream objectInputStream;
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -22,11 +24,12 @@ public class FileListHandler {
         }
     }
 
-    public static void save(File file, List<Integer> integers) {
+    @Override
+    public void save(File file, List<Integer> list) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(integers);
+            objectOutputStream.writeObject(list);
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (Exception e) {

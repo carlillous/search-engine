@@ -1,3 +1,5 @@
+package cli;
+
 import java.util.Scanner;
 
 public class CLI {
@@ -9,7 +11,7 @@ public class CLI {
             System.out.println("-------------------------------------------------------");
             System.out.println("This is a Search Query where you can write a word and \n" +
                     "search for the books in which it appears.");
-            System.out.print("Please, enter a word (use ':q' to quit) ");
+            System.out.println("Please, enter a word (use ':q' to quit) ");
             System.out.println("-------------------------------------------------------");
             command = scanner.nextLine();
 

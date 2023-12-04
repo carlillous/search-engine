@@ -1,16 +1,18 @@
 package persistence.facade;
 
-import persistence.list.FileListHandler;
+import persistence.list.BinaryListPersistence;
+import persistence.list.DataListPersistence;
+import persistence.list.ListPersistence;
 import persistence.repository.FileRepository;
 
 import java.io.File;
 import java.util.List;
 
-public class ListPersistenceFacade {
+public class FileListPersistenceFacade {
     private final FileRepository fileRepository;
-    private static FileListHandler listPersistence;
+    private static ListPersistence listPersistence = new DataListPersistence();
 
-    public ListPersistenceFacade(String path, String extension) {
+    public FileListPersistenceFacade(String path, String extension) {
         fileRepository = new FileRepository(path, extension);
     }
 
