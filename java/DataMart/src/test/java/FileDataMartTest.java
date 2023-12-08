@@ -1,5 +1,6 @@
 import impl.DataMart;
 import impl.file.FileDataMart;
+import java.io.File;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ class FileDataMartTest {
     @Test
     void test() {
         DataMart dataMart = new FileDataMart();
+
+        File f1 = new File("InvertedIndexRepository", "hello.dat");
+        File f2 = new File("InvertedIndexRepository", "world.dat");
+        f1.delete();
+        f2.delete();
 
         String word1 = "hello";
         String word2 = "world";
