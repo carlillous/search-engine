@@ -1,7 +1,6 @@
 import datalake.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-
 import java.io.IOException;
 import java.util.Random;
 
@@ -48,6 +47,7 @@ public class Downloader {
                 String bookContent = ContentManager.getBookContent(book);
 
                 dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
+                MessageSender.sendMessage(fileName);
                 System.out.println("Book saved: " + fileName);
                 return true;
             } else {
