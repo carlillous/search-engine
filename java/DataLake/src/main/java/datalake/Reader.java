@@ -1,3 +1,5 @@
+package datalake;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -5,15 +7,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 public class Reader implements BookReader {
     private Set<String> stopwordsEng = new HashSet<>();
+    private DataLake datalake;
 
-    public Reader() {
+    public Reader(DataLake dlake) {
+        this.datalake = dlake;
         loadStopwords();
     }
 
     private void loadStopwords() {
-        try (FileInputStream stopwordStream = new FileInputStream("src/files/en-stopwords.txt");
+        try (FileInputStream stopwordStream = new FileInputStream("datalake/src/files/en-stopwords.txt");
              InputStreamReader stopwordStreamReader = new InputStreamReader(stopwordStream, StandardCharsets.UTF_8);
              BufferedReader stopwordBufferedReader = new BufferedReader(stopwordStreamReader)) {
 
@@ -56,10 +61,10 @@ public class Reader implements BookReader {
 
     @Override
     public Book readBook(String path) {
-        String bookName;
+        String fileName,bookName;
         List<String> words = new ArrayList<>();
         File file = new File(path);
-        bookName = file.getName();
+        fileName = file.getName();
 
         try (FileInputStream fileStream = new FileInputStream(path);
              InputStreamReader fileStreamReader = new InputStreamReader(fileStream, StandardCharsets.UTF_8);
@@ -75,8 +80,20 @@ public class Reader implements BookReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        bookName = this.extractBookName(fileName);
+        Book book = new Book(bookName,words);
+        datalake.addBook(book.getIndex(), book.getName());
 
-        return new Book(bookName, words);
+        return book;
+    }
+
+    public static String extractBookName(String fileName) {
+        String[] parts = fileName.split("\\)");
+        String extractedName = parts[1].replace("_", " ");
+        extractedName = extractedName.substring(0, extractedName.length() - 4);
+        extractedName = extractedName.substring(0, 1).toUpperCase() + extractedName.substring(1);
+
+        return extractedName;
     }
 
 }
