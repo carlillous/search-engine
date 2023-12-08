@@ -1,3 +1,5 @@
+package indexer;
+
 import datalake.Book;
 import datalake.DataLake;
 import datalake.Reader;

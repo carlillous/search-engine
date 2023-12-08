@@ -1,3 +1,5 @@
+package indexer;
+
 import datalake.DataLake;
 
 public class Main {

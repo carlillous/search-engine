@@ -1,3 +1,5 @@
+package crawler;
+
 import datalake.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

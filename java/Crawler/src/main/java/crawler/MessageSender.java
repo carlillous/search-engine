@@ -1,3 +1,5 @@
+package crawler;
+
 import jakarta.jms.*;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
