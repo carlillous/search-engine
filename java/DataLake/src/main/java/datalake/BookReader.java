@@ -1,3 +1,5 @@
+package datalake;
+
 import java.util.List;
 
 public interface BookReader {

@@ -1,4 +1,9 @@
-import javax.xml.crypto.Data;
+import datalake.Book;
+import datalake.DataLake;
+import datalake.Reader;
+import impl.DataMart;
+import impl.file.FileDataMart;
+
 import java.io.File;
 import java.util.List;
 
@@ -24,7 +29,8 @@ public class Indexer {
         }
     }
 
-    public void indexAll(String directory) {
+    public void indexAll() {
+        String directory = dataLake.getDataLakePath();
         System.out.println("[INDEXER]: ------------------ Indexing starting -------------------");
         File[] files = new File(directory).listFiles();
         if (files != null) {
