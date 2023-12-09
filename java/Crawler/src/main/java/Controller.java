@@ -22,7 +22,7 @@ public class Controller {
         try {
             executor.scheduleAtFixedRate(() -> {
                 downloader.run();
-            }, 0, 30, TimeUnit.SECONDS);
+            }, 0, 1, TimeUnit.MINUTES);
 
             Thread.currentThread().join();
         } catch (InterruptedException e) {
