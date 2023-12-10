@@ -3,14 +3,17 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Downloader {
     private DataLake dataLake;
+    public static Logger logger = LoggerFactory.getLogger(Downloader.class);
 
     public Downloader(DataLake dl){
         dataLake = dl;
+        System.setProperty("log4j.configurationFile", "log4j2.properties");
     }
-
     public void run() {
         try {
                 Random random = new Random();
@@ -19,12 +22,12 @@ public class Downloader {
                 String bookUrl = "https://www.gutenberg.org/cache/epub/" + numStr + "/pg" + numStr + ".txt";
 
                 if (dataLake.isBookInDataLake(numStr)) {
-                    System.out.println("Book is already downloaded.");
+                    logger.info("Book is already downloaded.");
                 }else{
                     if (downloadBook(bookUrl, numStr)) {
-                        System.out.println("Download completed.");
+                        logger.info("Download completed.");
                     } else {
-                        System.out.println("Book not found: " + bookUrl);
+                        logger.error("Book not found: " + bookUrl);
                     }
                 }
         } catch (Exception e) {
@@ -34,7 +37,8 @@ public class Downloader {
 
     private boolean downloadBook(String bookUrl, String i) {
         try {
-            Connection.Response response = Jsoup.connect(bookUrl).ignoreContentType(true)
+            logger.info("Trying connection...");
+            Connection.Response response = Jsoup.connect(bookUrl).timeout(30000).ignoreContentType(true)
                     .execute();
             String book = response.parse().wholeText();
 
@@ -48,12 +52,13 @@ public class Downloader {
 
                 dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
                 MessageSender.sendMessage(fileName);
-                System.out.println("Book saved: " + fileName);
+                logger.info("Book saved: " + fileName);
                 return true;
             } else {
                 return false;
             }
         } catch (IOException e) {
+            logger.error("Connection failed. Retrying...");
             e.printStackTrace();
             return false;
         }
