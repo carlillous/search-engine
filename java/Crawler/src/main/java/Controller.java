@@ -24,7 +24,6 @@ public class Controller {
                 downloader.run();
             }, 0, 1, TimeUnit.MINUTES);
 
-
             Thread.currentThread().join();
         } catch (InterruptedException e) {
             e.printStackTrace();
