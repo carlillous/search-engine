@@ -25,7 +25,7 @@ public class Controller {
             executor.scheduleAtFixedRate(() -> {
                 // Call the method that will be executed every minute
                 downloader.run();
-            }, 0, 5, TimeUnit.SECONDS);// Start the task immediately and execute it every 1 minute
+            }, 0, 1, TimeUnit.MINUTES);// Start the task immediately and execute it every 1 minute
 
             Thread.currentThread().join();
         } catch (InterruptedException e) {
