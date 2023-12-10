@@ -6,6 +6,7 @@ import impl.DataMart;
 import impl.file.FileDataMart;
 import impl.hazelcast.HazelcastDataMart;
 
+import javax.sound.midi.Receiver;
 import java.io.File;
 import java.util.List;
 
@@ -46,10 +47,6 @@ public class HazelcastIndexer {
         System.out.println("[INDEXER]: -------------------- Indexing ended --------------------");
     }
 
-    public void indexQueue(){
-        new Receiver();
-
-    }
 
 }
 

@@ -23,13 +23,13 @@ class HazelcastDataMartTest {
 
         DataMart dataMart = new HazelcastDataMart(invertedIndexMap);
 
-        String word1 = "hello";
+        String word1 = "trois";
         String word2 = "world";
         List<Integer> indexes1 = new ArrayList<>();
         List<Integer> indexes2 = new ArrayList<>();
 
         // Insert to empty
-        int i0 = 0;
+        int i0 = 4;
         indexes1.add(i0);
         dataMart.addBookIndexToWord(word1, i0);
         assertTrue(dataMart.getInvertedIndexOf(word1).containsAll(indexes1));
