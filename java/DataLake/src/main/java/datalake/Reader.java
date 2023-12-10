@@ -18,7 +18,7 @@ public class Reader implements BookReader {
     }
 
     private void loadStopwords() {
-        try (FileInputStream stopwordStream = new FileInputStream("datalake/src/files/en-stopwords.txt");
+        try (FileInputStream stopwordStream = new FileInputStream("src/files/en-stopwords.txt");
              InputStreamReader stopwordStreamReader = new InputStreamReader(stopwordStream, StandardCharsets.UTF_8);
              BufferedReader stopwordBufferedReader = new BufferedReader(stopwordStreamReader)) {
 

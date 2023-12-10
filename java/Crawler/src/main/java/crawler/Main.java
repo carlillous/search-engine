@@ -1,3 +1,5 @@
+package crawler;
+
 import datalake.DataLake;
 
 public class Main {
