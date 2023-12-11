@@ -41,6 +41,7 @@ services:
 
   artemis:
     image: apache/activemq-artemis:latest
+    container_name: artemis
     ports:
       - "8161:8161"
       - "61616:61616"
@@ -48,23 +49,5 @@ services:
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8161/console"]
       interval: 10s
-      timeout: 5s
-      retries: 5
-
-  db:
-    image: postgres
-    restart: always
-    container_name: ace_vba_db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db
-    ports:
-      - '5432:5432'
-    volumes:
-      - .docker/postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d db -U postgres" ]
-      interval: 5s
       timeout: 5s
       retries: 5
