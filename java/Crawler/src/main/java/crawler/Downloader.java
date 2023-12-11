@@ -14,7 +14,6 @@ public class Downloader {
 
     public Downloader(DataLake dl){
         dataLake = dl;
-        System.setProperty("log4j.configurationFile", "log4j2.properties");
     }
     public void run() {
         try {
