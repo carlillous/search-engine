@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-  builder:
-    container_name: builder
-    image: maven:3.9-amazoncorretto-11
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: mvn clean package
+#  builder:
+#    container_name: builder
+#    image: maven:3.9-amazoncorretto-11
+#    working_dir: /app
+#    volumes:
+#      - .:/app
+#    command: mvn clean package
 
   crawler:
     build: Crawler
     image: adamprochazka/ulpgc-bd-crawler
     container_name: crawler
     depends_on:
-      builder:
-        condition: service_completed_successfully
+#      builder:
+#        condition: service_completed_successfully
       artemis:
         condition: service_healthy
 
@@ -24,8 +24,8 @@ services:
     image: adamprochazka/ulpgc-bd-indexer
     container_name: indexer
     depends_on:
-      builder:
-        condition: service_completed_successfully
+#      builder:
+#        condition: service_completed_successfully
       artemis:
         condition: service_healthy
 
@@ -33,9 +33,9 @@ services:
     build: SearchQuery
     image: adamprochazka/ulpgc-bd-query
     container_name: query
-    depends_on:
-      builder:
-        condition: service_completed_successfully
+#    depends_on:
+#      builder:
+#        condition: service_completed_successfully
     ports:
       - "4567:4567"
 
