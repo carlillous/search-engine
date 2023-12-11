@@ -1,5 +1,5 @@
 import impl.DataMart;
-import impl.file.FileDataMart;
+import impl.file.FileSystemDataMart;
 import java.io.File;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ class FileDataMartTest {
 
     @Test
     void test() {
-        DataMart dataMart = new FileDataMart();
+        DataMart dataMart = new FileSystemDataMart();
 
         File f1 = new File("InvertedIndexRepository", "hello.dat");
         File f2 = new File("InvertedIndexRepository", "world.dat");
