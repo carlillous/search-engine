@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  crawler:
+    image: adamprochazka/bd-crawler
+    container_name: crawler
+    depends_on:
+      artemis:
+        condition: service_healthy
+
+  indexer:
+    image: adamprochazka/bd-indexer
+    container_name: indexer
+    depends_on:
+      artemis:
+        condition: service_healthy
+
+  query:
+    image: adamprochazka/bd-query
+    container_name: query
+    ports:
+      - "4567:4567"
+
+  artemis:
+    image: apache/activemq-artemis:latest
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "61613:61613"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8161/console"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

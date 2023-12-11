@@ -16,8 +16,8 @@ services:
     depends_on:
       builder:
         condition: service_completed_successfully
-#      artemis:
-#        condition: service_healthy
+      artemis:
+        condition: service_healthy
 
   indexer:
     build: Indexer
@@ -26,8 +26,8 @@ services:
     depends_on:
       builder:
         condition: service_completed_successfully
-  #      artemis:
-  #        condition: service_healthy
+      artemis:
+        condition: service_healthy
 
   query:
     build: SearchQuery
@@ -39,14 +39,14 @@ services:
     ports:
       - "4567:4567"
 
-#  artemis:
-#    image: apache/activemq-artemis:latest
-#    ports:
-#      - "8161:8161"
-#      - "61616:61616"
-#      - "61613:61613"
-#    healthcheck:
-#      test: ["CMD", "curl", "--fail", "http://localhost:8161/console"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
+  artemis:
+    image: apache/activemq-artemis:latest
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "61613:61613"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8161/console"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
