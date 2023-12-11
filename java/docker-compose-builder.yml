@@ -3,7 +3,7 @@ version: '3.8'
 services:
   builder:
     container_name: builder
-    image: maven:3.9-amazoncorretto-17
+    image: maven:3.9-amazoncorretto-11
     working_dir: /app
     volumes:
       - .:/app
@@ -11,7 +11,7 @@ services:
 
   crawler:
     build: Crawler
-#    image:
+    image: adamprochazka/ulpgc-bd-crawler
     container_name: crawler
     depends_on:
       builder:
@@ -21,7 +21,7 @@ services:
 
   indexer:
     build: Indexer
-    #    image:
+    image: adamprochazka/ulpgc-bd-indexer
     container_name: indexer
     depends_on:
       builder:
@@ -31,7 +31,7 @@ services:
 
   query:
     build: SearchQuery
-    #    image:
+    image: adamprochazka/ulpgc-bd-query
     container_name: query
     depends_on:
       builder:
