@@ -1,6 +1,8 @@
-package crawler;
+package crawler.filesys;
 
-import datalake.DataLake;
+import crawler.ctrl.ContentManager;
+import crawler.ctrl.MessageSender;
+import fsystem.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;
@@ -17,20 +19,20 @@ public class Downloader {
     }
     public void run() {
         try {
-                Random random = new Random();
-                int randomNumber = random.nextInt(70000) + 1;
-                String numStr = String.valueOf(randomNumber);
-                String bookUrl = "https://www.gutenberg.org/cache/epub/" + numStr + "/pg" + numStr + ".txt";
+            Random random = new Random();
+            int randomNumber = random.nextInt(70000) + 1;
+            String numStr = String.valueOf(randomNumber);
+            String bookUrl = "https://www.gutenberg.org/cache/epub/" + numStr + "/pg" + numStr + ".txt";
 
-                if (dataLake.isBookInDataLake(numStr)) {
-                    logger.info("Book is already downloaded.");
-                }else{
-                    if (downloadBook(bookUrl, numStr)) {
-                        logger.info("Download completed.");
-                    } else {
-                        logger.error("Book not found: " + bookUrl);
-                    }
+            if (dataLake.isBookInDataLake(numStr)) {
+                logger.info("Book is already downloaded.");
+            }else{
+                if (downloadBook(bookUrl, numStr)) {
+                    logger.info("Download completed.");
+                } else {
+                    logger.error("Book not found: " + bookUrl);
                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
-package crawler;
+package crawler.filesys;
 
-import datalake.DataLake;
+import fsystem.DataLake;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
