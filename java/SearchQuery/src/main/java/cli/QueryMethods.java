@@ -1,7 +1,7 @@
 package cli;
 
 import impl.DataMart;
-import impl.file.FileDataMart;
+import impl.file.FileSystemDataMart;
 
 import datalake.DataLake;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class QueryMethods {
 
-    private DataMart dataMart = new FileDataMart();
+    private DataMart dataMart = new FileSystemDataMart();
     private DataLake dataLake = new DataLake();
 
     public void queryWord(String word){

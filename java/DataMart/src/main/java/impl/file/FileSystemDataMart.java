@@ -6,11 +6,11 @@ import util.inserter.list.UniqueIntegerListInserter;
 
 import java.util.List;
 
-public class FileDataMart implements DataMart {
+public class FileSystemDataMart implements DataMart {
     private final UniqueIntegerListInserter uniqueListInserter = new UniqueIntegerListInserter();
     private final BookIndexWordPersistence bookIndexWordPersistence;
 
-    public FileDataMart() {
+    public FileSystemDataMart() {
         String path = "InvertedIndexRepository";
         String extension = ".dat";
         bookIndexWordPersistence = new BookIndexWordPersistence(path, extension);

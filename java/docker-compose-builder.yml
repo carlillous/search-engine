@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+#  builder:
+#    container_name: builder
+#    image: maven:3.9-amazoncorretto-11
+#    working_dir: /app
+#    volumes:
+#      - .:/app
+#    command: mvn clean package
+
+  crawler:
+    build: Crawler
+    image: adamprochazka/ulpgc-bd-crawler
+    container_name: crawler
+    depends_on:
+#      builder:
+#        condition: service_completed_successfully
+      artemis:
+        condition: service_healthy
+
+  indexer:
+    build: Indexer
+    image: adamprochazka/ulpgc-bd-indexer
+    container_name: indexer
+    depends_on:
+#      builder:
+#        condition: service_completed_successfully
+      artemis:
+        condition: service_healthy
+
+  query:
+    build: SearchQuery
+    image: adamprochazka/ulpgc-bd-query
+    container_name: query
+#    depends_on:
+#      builder:
+#        condition: service_completed_successfully
+    ports:
+      - "4567:4567"
+
+  artemis:
+    image: apache/activemq-artemis:latest
+    container_name: artemis
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "61613:61613"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8161/console"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
