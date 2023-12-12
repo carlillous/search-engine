@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
-    DataLake dataLake ;
-    Downloader downloader;
+    private final DataLake dataLake ;
+    private final Downloader downloader;
 
     public Controller(DataLake dl){
         this.dataLake = dl;
@@ -22,9 +22,7 @@ public class Controller {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
         try {
-            executor.scheduleAtFixedRate(() -> {
-                downloader.run();
-            }, 0, 1, TimeUnit.MINUTES);
+            executor.scheduleAtFixedRate(downloader::run, 0, 1, TimeUnit.MINUTES);
 
             Thread.currentThread().join();
         } catch (InterruptedException e) {

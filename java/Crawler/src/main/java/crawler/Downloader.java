@@ -9,8 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Downloader {
-    private DataLake dataLake;
-    public static Logger logger = LoggerFactory.getLogger(Downloader.class);
+    private final DataLake dataLake;
+    private static final Logger logger = LoggerFactory.getLogger(Downloader.class);
+    private final MessageSender messageSender = new MessageSender();
 
     public Downloader(DataLake dl){
         dataLake = dl;
@@ -52,7 +53,7 @@ public class Downloader {
                 String bookContent = ContentManager.getBookContent(book);
 
                 dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
-                MessageSender.sendMessage(fileName);
+                messageSender.sendMessage(fileName);
                 logger.info("Book saved: " + fileName);
                 return true;
             } else {
