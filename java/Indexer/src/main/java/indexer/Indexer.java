@@ -8,11 +8,14 @@ import impl.file.FileSystemDataMart;
 
 import java.io.File;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Indexer {
 
     private DataMart dataMart;
     private DataLake dataLake;
+    private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 
     public Indexer(DataLake dl) {
         dataMart = new FileSystemDataMart();
@@ -25,10 +28,11 @@ public class Indexer {
         int index = book.getIndex();
         String bookName = book.getName();
         List<String> words = book.getWords();
-        System.out.println("[INDEXER]: Indexing book: \"" + bookName + "\"");
+        logger.info("Indexing: \"" + bookName + "\"");
         for (String word : words) {
             dataMart.addBookIndexToWord(word,index);
         }
+        logger.info("Done: \"" + bookName + "\"");
     }
 
     public void indexAll() {
@@ -46,8 +50,8 @@ public class Indexer {
     }
 
     public void indexQueue(){
-        new Receiver();
-
+        Receiver receiver = new Receiver(dataLake);
+        receiver.start();
     }
 
 }

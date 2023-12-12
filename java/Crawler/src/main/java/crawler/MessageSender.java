@@ -32,7 +32,7 @@ public class MessageSender {
             MessageProducer producer = session.createProducer(queue);
             TextMessage textMessage = session.createTextMessage(fileName);
             producer.send(textMessage);
-            logger.info("Sent: " + fileName);
+            logger.info("Message sent: " + fileName);
 
             producer.close();
             session.close();

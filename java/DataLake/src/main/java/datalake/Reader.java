@@ -3,32 +3,35 @@ package datalake;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 public class Reader implements BookReader {
-    private Set<String> stopwordsEng = new HashSet<>();
-    private DataLake datalake;
+    private final Set<String> stopwordsEng;
+    private final DataLake datalake;
 
-    public Reader(DataLake dlake) {
-        this.datalake = dlake;
-        loadStopwords();
-    }
+    public Reader(DataLake dataLake) {
+        this.datalake = dataLake;
+        String[] wordsArray = {
+            "i", "me", "my", "myself", "we", "our", "ours", "ourselves",
+            "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself",
+            "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their",
+            "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these",
+            "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has",
+            "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if",
+            "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about",
+            "against", "between", "into", "through", "during", "before", "after", "above",
+            "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under",
+            "again", "further", "then", "once", "here", "there", "when", "where", "why", "how",
+            "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no",
+            "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can",
+            "will", "just", "don", "should", "now"
+        };
 
-    private void loadStopwords() {
-        try (FileInputStream stopwordStream = new FileInputStream("src/files/en-stopwords.txt");
-             InputStreamReader stopwordStreamReader = new InputStreamReader(stopwordStream, StandardCharsets.UTF_8);
-             BufferedReader stopwordBufferedReader = new BufferedReader(stopwordStreamReader)) {
-
-            String line;
-            while ((line = stopwordBufferedReader.readLine()) != null) {
-                stopwordsEng.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stopwordsEng = new HashSet<>(new ArrayList<>(Arrays.asList(wordsArray)));
     }
 
     @Override
