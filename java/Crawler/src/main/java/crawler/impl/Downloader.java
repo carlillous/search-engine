@@ -1,9 +1,8 @@
-package crawler.filesys;
+package crawler.impl;
 
 import crawler.ctrl.ContentManager;
 import crawler.ctrl.MessageSender;
 import datalake.cloud.CloudDatalake;
-import datalake.filesystem.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;

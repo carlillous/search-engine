@@ -1,9 +1,7 @@
 package crawler;
 
-import crawler.cloud.CloudController;
 import datalake.cloud.CloudDatalake;
-import datalake.filesystem.DataLake;
-import crawler.filesys.Controller;
+import crawler.impl.Controller;
 
 public class Main {
     public static void main(String[] args) {
