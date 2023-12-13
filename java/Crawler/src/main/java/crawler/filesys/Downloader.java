@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Downloader {
-    private DataLake dataLake;
-    public static Logger logger = LoggerFactory.getLogger(Downloader.class);
+    private final DataLake dataLake;
+    private static final Logger logger = LoggerFactory.getLogger(Downloader.class);
 
     public Downloader(DataLake dl){
         dataLake = dl;
@@ -26,26 +26,22 @@ public class Downloader {
 
             if (dataLake.isBookInDataLake(numStr)) {
                 logger.info("Book is already downloaded.");
-            }else{
-                if (downloadBook(bookUrl, numStr)) {
-                    logger.info("Download completed.");
-                } else {
-                    logger.error("Book not found: " + bookUrl);
-                }
+            } else {
+                downloadBook(bookUrl, numStr);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception: " + e);
         }
     }
 
-    private boolean downloadBook(String bookUrl, String i) {
+    private void downloadBook(String bookUrl, String i) {
         try {
             logger.info("Trying connection...");
             Connection.Response response = Jsoup.connect(bookUrl).timeout(30000).ignoreContentType(true)
                     .execute();
             String book = response.parse().wholeText();
 
-            if (book.length() > 0) {
+            if (!book.isEmpty()) {
                 String title = ContentManager.getBookTitle(book);
                 String finalTitle = ContentManager.cleanFilename(title);
 
@@ -54,16 +50,13 @@ public class Downloader {
                 String bookContent = ContentManager.getBookContent(book);
 
                 dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
-                MessageSender.sendMessage(fileName);
                 logger.info("Book saved: " + fileName);
-                return true;
+                MessageSender.sendMessage(fileName);
             } else {
-                return false;
+                logger.error("Book not found: " + bookUrl);
             }
         } catch (IOException e) {
-            logger.error("Connection failed. Retrying...");
-            e.printStackTrace();
-            return false;
+            logger.error("Exception: " + e);
         }
     }
 

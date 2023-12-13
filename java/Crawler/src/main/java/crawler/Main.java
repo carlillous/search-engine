@@ -13,8 +13,8 @@ public class Main {
 
     private static void startCrawlerToFileSystem(){
         DataLake dataLake = new DataLake();
-        Controller crawler = new Controller(dataLake);
-        crawler.start();
+        Controller controller = new Controller(dataLake);
+        controller.start();
     }
 
     private static void startCrawlerToCloud(){
