@@ -1,5 +1,7 @@
 package crawler.filesys;
 
+import crawler.cloud.CloudDownloader;
+import datalake.cloud.CloudDatalake;
 import datalake.filesystem.DataLake;
 
 import java.util.concurrent.Executors;
@@ -8,12 +10,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
-    private final DataLake dataLake ;
-    private final Downloader downloader;
+    private final CloudDatalake dataLake ;
+    private final CloudDownloader downloader;
 
-    public Controller(DataLake dl){
-        this.dataLake = dl;
-        this.downloader = new Downloader(dataLake);
+    public Controller(CloudDatalake dataLake){
+        this.dataLake = dataLake;
+        this.downloader = new CloudDownloader(dataLake);
         this.start();
     }
 
@@ -33,7 +35,7 @@ public class Controller {
 
     }
 
-    public DataLake getDataLake(){
+    public CloudDatalake getDataLake(){
         return this.dataLake;
     }
 

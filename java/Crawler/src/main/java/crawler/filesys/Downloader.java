@@ -2,6 +2,7 @@ package crawler.filesys;
 
 import crawler.ctrl.ContentManager;
 import crawler.ctrl.MessageSender;
+import datalake.cloud.CloudDatalake;
 import datalake.filesystem.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -11,12 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Downloader {
-    private final DataLake dataLake;
+    private final CloudDatalake dataLake;
     private static final Logger logger = LoggerFactory.getLogger(Downloader.class);
 
-    public Downloader(DataLake dl){
-        dataLake = dl;
+    public Downloader(CloudDatalake dataLake){
+        this.dataLake = dataLake;
     }
+
     public void run() {
         try {
             Random random = new Random();
@@ -49,7 +51,7 @@ public class Downloader {
 
                 String bookContent = ContentManager.getBookContent(book);
 
-                dataLake.saveToFile(dataLake.getDataLakePath() + fileName, bookContent);
+                dataLake.saveToCloud(fileName, bookContent);
                 logger.info("Book saved: " + fileName);
                 MessageSender.sendMessage(fileName);
             } else {
