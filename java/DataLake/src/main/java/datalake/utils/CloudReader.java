@@ -52,8 +52,8 @@ public class CloudReader implements Reader{
         }
 
         bookName = extractBookName(fileName);
-        Book book = new Book(bookName, words);
-        dataLake.addBook(book.getIndex(), book.getName());
+        int index = dataLake.addBook(bookName);
+        Book book = new Book(bookName,index,words);
 
         return book;
     }

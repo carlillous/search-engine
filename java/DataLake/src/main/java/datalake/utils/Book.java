@@ -4,16 +4,15 @@ import java.util.List;
 
 public class Book {
 
-    private static int count = 0;
     private int index;
     private String name;
     private List<String> words;
 
 
-    public Book(String name, List<String> words) {
+    public Book(String name,int indx, List<String> words) {
         this.name = name;
         this.words = words;
-        this.index = count++;
+        this.index = indx;
     }
 
     public String getName() {

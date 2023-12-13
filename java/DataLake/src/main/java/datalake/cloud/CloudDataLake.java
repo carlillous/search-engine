@@ -10,6 +10,7 @@ import com.google.cloud.storage.StorageOptions;
 
 import java.io.*;
 import java.nio.channels.Channels;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class CloudDataLake {
     private Credentials credentials;
     private Storage storage;
 
-    private Map<Integer, String> bookNames;
+    public Map<Integer, String> bookNames;
     private BookPersistenceCloud persistence;
 
     public CloudDataLake() {
@@ -31,9 +32,14 @@ public class CloudDataLake {
         bookNames = persistence.load();
     }
 
-    public void addBook(int bookIndex, String bookTitle) {
+    public int addBook(String bookTitle) {
+        int bookIndex = 0;
+        if (!bookNames.isEmpty()) {
+            bookIndex = Collections.max(bookNames.keySet()) + 1;
+        }
         bookNames.put(bookIndex, bookTitle);
         persistence.save(bookNames);
+        return bookIndex;
     }
 
     public boolean isBookInDataLake(String i) {
