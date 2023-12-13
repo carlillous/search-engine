@@ -2,7 +2,7 @@ package crawler.impl;
 
 import crawler.ctrl.ContentManager;
 import crawler.ctrl.MessageSender;
-import datalake.cloud.CloudDatalake;
+import datalake.cloud.CloudDataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Downloader {
-    private final CloudDatalake dataLake;
+    private final CloudDataLake dataLake;
     private static final Logger logger = LoggerFactory.getLogger(Downloader.class);
 
-    public Downloader(CloudDatalake dataLake){
+    public Downloader(CloudDataLake dataLake){
         this.dataLake = dataLake;
     }
 

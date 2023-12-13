@@ -1,5 +1,6 @@
 package datalake.cloud;
 
+import com.google.api.gax.paging.Page;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
@@ -10,8 +11,9 @@ import com.google.cloud.storage.StorageOptions;
 import java.io.*;
 import java.nio.channels.Channels;
 import java.util.Map;
+import java.util.Objects;
 
-public class CloudDatalake {
+public class CloudDataLake {
     private String projectId;
     private String bucketName;
     private Bucket bucket;
@@ -21,7 +23,7 @@ public class CloudDatalake {
     private Map<Integer, String> bookNames;
     private BookPersistenceCloud persistence;
 
-    public CloudDatalake() {
+    public CloudDataLake() {
         this.projectId = "search-engine-bd";
         this.bucketName = "ellagodelosdatos";
         initializeCloudStorage();
@@ -56,23 +58,24 @@ public class CloudDatalake {
     }
 
     public void saveToCloud(String fileName, String content) {
-            try {
-                Blob blob = storage.get(bucketName, fileName);
-                if (blob == null) {
-                    blob = storage.create(Blob.newBuilder(bucketName, fileName).build());
-                }
-
-                OutputStream outputStream = Channels.newOutputStream(blob.writer());
-                outputStream.write(content.getBytes());
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            Blob blob = storage.get(bucketName, fileName);
+            if (blob == null) {
+                blob = storage.create(Blob.newBuilder(bucketName, fileName).build());
             }
+
+            OutputStream outputStream = Channels.newOutputStream(blob.writer());
+            outputStream.write(content.getBytes());
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
     private void initializeCloudStorage() {
         try {
-            this.credentials = GoogleCredentials.fromStream(new FileInputStream("DataLake/src/main/resources/credentials.json"));
+            this.credentials = GoogleCredentials.fromStream(
+                Objects.requireNonNull(getClass().getResourceAsStream("/credentials.json")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,8 +94,19 @@ public class CloudDatalake {
         return storage;
     }
 
+    public Blob getBlob(String name) {
+        return bucket.get(name);
+    }
 
-
+    public static void main(String[] args) {
+        CloudDataLake cloudDataLake = new CloudDataLake();
+        Page<Blob> blobs = cloudDataLake.bucket.list();
+        for (Blob blob: blobs.getValues()) {
+            String content = new String(blob.getContent());
+            String name = blob.getName();
+            System.out.println(name);
+        }
+    }
 }
 
 

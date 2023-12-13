@@ -1,12 +1,11 @@
 package indexer;
 
 
-import datalake.filesystem.DataLake;
+import datalake.cloud.CloudDataLake;
 import javax.jms.JMSException;
 import javax.jms.Connection;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -25,9 +24,9 @@ public class Receiver {
     private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
 
     private final Indexer indexer;
-    private final DataLake dataLake;
+    private final CloudDataLake dataLake;
 
-    public Receiver(DataLake dataLake) {
+    public Receiver(CloudDataLake dataLake) {
         this.dataLake = dataLake;
         this.indexer = new Indexer(dataLake);
     }
@@ -60,7 +59,7 @@ public class Receiver {
                 TextMessage textMessage = (TextMessage) message;
                 String bookFilename = textMessage.getText();
                 logger.info("Message received: " + bookFilename);
-                indexer.indexOne(dataLake.getDataLakePath()+bookFilename);
+                indexer.index(bookFilename);
             }
         } catch (JMSException e) {
             logger.error("Exception: " + e);

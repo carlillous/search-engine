@@ -1,6 +1,6 @@
 package datalake.utils;
 
-import datalake.cloud.CloudDatalake;
+import datalake.cloud.CloudDataLake;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import java.io.*;
@@ -13,28 +13,28 @@ import static datalake.utils.Common.*;
 
 public class CloudReader{
 
+    private CloudDataLake dataLake;
     private String bucketName;
     private Storage storage;
-    private CloudDatalake cloudDatalake = new CloudDatalake();
     private Set<String> stopwords;
 
-    public CloudReader(){
-        this.bucketName = cloudDatalake.getBucketName();
-        this.storage = cloudDatalake.getStorage();
+    public CloudReader(CloudDataLake dataLake) {
+        this.dataLake = dataLake;
+        this.bucketName = dataLake.getBucketName();
+        this.storage = dataLake.getStorage();
         this.stopwords = loadStopwords();
-
     }
 
-    public Book readBook(Blob blob) {
-        String fileName, bookName;
+    public Book readBook(String fileName) {
+        String bookName;
         List<String> words = new ArrayList<>();
+
+        Blob blob = dataLake.getBlob(fileName);
 
         if (blob == null) {
             System.out.println("File not found in the bucket.");
             return null;
         }
-
-        fileName = blob.getName();
 
         try (InputStream inputStream = new ByteArrayInputStream(blob.getContent());
              InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
@@ -53,7 +53,7 @@ public class CloudReader{
 
         bookName = extractBookName(fileName);
         Book book = new Book(bookName, words);
-        cloudDatalake.addBook(book.getIndex(), book.getName());
+        dataLake.addBook(book.getIndex(), book.getName());
 
         return book;
     }

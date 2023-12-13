@@ -1,29 +1,30 @@
 package indexer;
 
-import datalake.filesystem.DataLake;
+import datalake.cloud.CloudDataLake;
 import datalake.utils.Book;
-import datalake.utils.Reader;
+import datalake.utils.CloudReader;
 import impl.DataMart;
 import impl.file.FileSystemDataMart;
 
-import java.io.File;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Indexer {
     private final DataMart dataMart;
-    private final DataLake dataLake;
+    private final CloudDataLake dataLake;
+    private final CloudReader reader;
+
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 
-    public Indexer(DataLake dl) {
+    public Indexer(CloudDataLake dataLake) {
         dataMart = new FileSystemDataMart();
-        dataLake = dl;
+        this.dataLake = dataLake;
+        reader = new CloudReader(dataLake);
     }
 
-    public void indexOne(String path) {
-        Reader reader = new Reader(dataLake);
-        Book book = reader.readBook(path);
+    public void index(String fileName) {
+        Book book = reader.readBook(fileName);
         int index = book.getIndex();
         String bookName = book.getName();
         List<String> words = book.getWords();
@@ -32,20 +33,6 @@ public class Indexer {
             dataMart.addBookIndexToWord(word,index);
         }
         logger.info("Done: \"" + bookName + "\"");
-    }
-
-    public void indexAll() {
-        String directory = dataLake.getDataLakePath();
-        System.out.println("[INDEXER]: ------------------ Indexing starting -------------------");
-        File[] files = new File(directory).listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    indexOne(file.getAbsolutePath());
-                }
-            }
-        }
-        System.out.println("[INDEXER]: -------------------- Indexing ended --------------------");
     }
 
     public void indexQueue(){

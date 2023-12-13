@@ -1,11 +1,11 @@
 package crawler;
 
-import datalake.cloud.CloudDatalake;
+import datalake.cloud.CloudDataLake;
 import crawler.impl.Controller;
 
 public class Main {
     public static void main(String[] args) {
-        CloudDatalake dataLake = new CloudDatalake();
+        CloudDataLake dataLake = new CloudDataLake();
         Controller controller = new Controller(dataLake);
         controller.start();
     }
