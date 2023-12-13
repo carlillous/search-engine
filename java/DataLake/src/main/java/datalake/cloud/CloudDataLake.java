@@ -21,7 +21,7 @@ public class CloudDataLake {
     private Credentials credentials;
     private Storage storage;
 
-    public Map<Integer, String> bookNames;
+    private Map<Integer, String> bookNames;
     private BookPersistenceCloud persistence;
 
     public CloudDataLake() {
