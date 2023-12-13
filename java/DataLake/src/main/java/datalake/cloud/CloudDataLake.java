@@ -28,7 +28,7 @@ public class CloudDataLake {
         this.projectId = "search-engine-bd";
         this.bucketName = "ellagodelosdatos";
         initializeCloudStorage();
-        persistence = new BookPersistenceCloud(this.bucketName, this.storage);
+        persistence = new BookPersistenceCloud(bucket);
         bookNames = persistence.load();
     }
 
@@ -103,7 +103,6 @@ public class CloudDataLake {
     public Blob getBlob(String name) {
         return bucket.get(name);
     }
-
 }
 
 
