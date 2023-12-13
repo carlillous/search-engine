@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static datalake.utils.Common.*;
 
-public class CloudReader{
+public class CloudReader implements Reader{
 
     private CloudDataLake dataLake;
     private String bucketName;

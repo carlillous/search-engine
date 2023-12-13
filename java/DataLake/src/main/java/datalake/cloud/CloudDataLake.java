@@ -98,15 +98,6 @@ public class CloudDataLake {
         return bucket.get(name);
     }
 
-    public static void main(String[] args) {
-        CloudDataLake cloudDataLake = new CloudDataLake();
-        Page<Blob> blobs = cloudDataLake.bucket.list();
-        for (Blob blob: blobs.getValues()) {
-            String content = new String(blob.getContent());
-            String name = blob.getName();
-            System.out.println(name);
-        }
-    }
 }
 
 
