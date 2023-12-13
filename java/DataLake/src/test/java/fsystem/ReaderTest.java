@@ -1,8 +1,9 @@
 package fsystem;
 
+import datalake.filesystem.DataLake;
 import org.junit.*;
-import utils.Book;
-import utils.Reader;
+import datalake.utils.Book;
+import datalake.utils.Reader;
 import static org.junit.Assert.*;
 import java.util.List;
 

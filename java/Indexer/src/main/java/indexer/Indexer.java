@@ -1,8 +1,8 @@
 package indexer;
 
-import datalake.Book;
-import datalake.DataLake;
-import datalake.Reader;
+import datalake.filesystem.DataLake;
+import datalake.utils.Book;
+import datalake.utils.Reader;
 import impl.DataMart;
 import impl.file.FileSystemDataMart;
 
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Indexer {
 
-    private DataMart dataMart;
-    private DataLake dataLake;
+    private final DataMart dataMart;
+    private final DataLake dataLake;
 
     public Indexer(DataLake dl) {
         dataMart = new FileSystemDataMart();
@@ -36,9 +36,9 @@ public class Indexer {
         System.out.println("[INDEXER]: ------------------ Indexing starting -------------------");
         File[] files = new File(directory).listFiles();
         if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isFile()) {
-                    indexOne(files[i].getAbsolutePath());
+            for (File file : files) {
+                if (file.isFile()) {
+                    indexOne(file.getAbsolutePath());
                 }
             }
         }

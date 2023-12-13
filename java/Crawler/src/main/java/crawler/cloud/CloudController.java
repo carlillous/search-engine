@@ -1,6 +1,6 @@
 package crawler.cloud;
 
-import cloud.CloudDatalake;
+import datalake.cloud.CloudDatalake;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

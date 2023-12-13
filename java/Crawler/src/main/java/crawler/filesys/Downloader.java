@@ -2,7 +2,7 @@ package crawler.filesys;
 
 import crawler.ctrl.ContentManager;
 import crawler.ctrl.MessageSender;
-import fsystem.DataLake;
+import datalake.filesystem.DataLake;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;

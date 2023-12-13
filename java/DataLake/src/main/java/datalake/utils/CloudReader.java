@@ -1,6 +1,6 @@
-package utils;
+package datalake.utils;
 
-import cloud.CloudDatalake;
+import datalake.cloud.CloudDatalake;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import java.io.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static utils.Common.*;
+import static datalake.utils.Common.*;
 
 public class CloudReader{
 

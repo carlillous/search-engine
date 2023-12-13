@@ -1,4 +1,4 @@
-package cloud;
+package datalake.cloud;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

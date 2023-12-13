@@ -1,4 +1,4 @@
-package utils;
+package datalake.utils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

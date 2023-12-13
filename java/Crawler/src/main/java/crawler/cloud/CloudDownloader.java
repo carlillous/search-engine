@@ -1,6 +1,6 @@
 package crawler.cloud;
 
-import cloud.CloudDatalake;
+import datalake.cloud.CloudDatalake;
 import crawler.ctrl.ContentManager;
 import crawler.ctrl.MessageSender;
 import crawler.filesys.Downloader;

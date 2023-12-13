@@ -1,6 +1,6 @@
 package indexer;
 
-import datalake.DataLake;
+import datalake.filesystem.DataLake;
 
 public class Main {
     public static void main(String[] args) {

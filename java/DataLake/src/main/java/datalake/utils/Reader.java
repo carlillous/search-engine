@@ -1,14 +1,14 @@
-package utils;
+package datalake.utils;
 
-import fsystem.DataLake;
+import datalake.filesystem.DataLake;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static utils.Common.extractBookName;
-import static utils.Common.preprocessText;
+import static datalake.utils.Common.extractBookName;
+import static datalake.utils.Common.preprocessText;
 
 
 public class Reader {
