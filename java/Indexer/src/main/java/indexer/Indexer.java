@@ -1,8 +1,7 @@
 package indexer;
 
 import datalake.cloud.CloudDataLake;
-import datalake.utils.Book;
-import datalake.utils.CloudReader;
+import datalake.utils.*;
 import impl.DataMart;
 import impl.file.FileSystemDataMart;
 
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class Indexer {
     private final DataMart dataMart;
     private final CloudDataLake dataLake;
-    private final CloudReader reader;
+    private final Reader reader;
 
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 
