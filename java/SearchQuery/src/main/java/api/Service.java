@@ -1,6 +1,7 @@
 package api;
 
-import datalake.DataLake;
+
+import datalake.filesystem.DataLake;
 import impl.DataMart;
 import impl.file.FileSystemDataMart;
 

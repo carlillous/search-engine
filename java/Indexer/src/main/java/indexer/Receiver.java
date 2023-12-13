@@ -1,15 +1,11 @@
 package indexer;
 
-import datalake.DataLake;
 
-import javax.jms.Destination;
+import datalake.cloud.CloudDataLake;
 import javax.jms.JMSException;
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -19,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class Receiver implements MessageListener {
+public class Receiver {
     private static final String url = "tcp://artemis:61616";
     public static final String username = "artemis";
     public static final String password = "artemis";
@@ -27,12 +23,18 @@ public class Receiver implements MessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
 
-    public Receiver() {
-        try {
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url, username, password);
+    private final Indexer indexer;
+    private final CloudDataLake dataLake;
+
+    public Receiver(CloudDataLake dataLake) {
+        this.dataLake = dataLake;
+        this.indexer = new Indexer(dataLake);
+    }
+
+    public void start() {
+        try(ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url, username, password)) {
             Connection connection = connectionFactory.createConnection();
             connection.start();
-
             logger.info("Connection to ActiveMQ established.");
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -41,34 +43,27 @@ public class Receiver implements MessageListener {
 
             MessageConsumer consumer = session.createConsumer(queue);
 
-            consumer.setMessageListener(this);
-
-            // TODO: Receive messages
+            while(true) {
+                Message messageReceived = consumer.receive();
+                onMessage(messageReceived);
+            }
         } catch (JMSException e) {
-            e.printStackTrace();
+            logger.error("Exception: " + e);
+            throw new RuntimeException(e);
         }
     }
 
-    @Override
     public void onMessage(Message message) {
         try {
             if (message instanceof TextMessage) {
-
                 TextMessage textMessage = (TextMessage) message;
                 String bookFilename = textMessage.getText();
-                logger.info("Received: " + bookFilename);
-
-                DataLake dataLake = new DataLake();
-                new Indexer(dataLake).indexOne(dataLake.getDataLakePath()+bookFilename);
-
+                logger.info("Message received: " + bookFilename);
+                indexer.index(bookFilename);
             }
-
         } catch (JMSException e) {
-            e.printStackTrace();
+            logger.error("Exception: " + e);
+            throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        new Receiver();
     }
 }
