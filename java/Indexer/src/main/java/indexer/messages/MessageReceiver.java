@@ -1,7 +1,12 @@
-package indexer;
+package indexer.messages;
 
 
-import datalake.cloud.CloudDataLake;
+import static indexer.messages.artemis.Config.password;
+import static indexer.messages.artemis.Config.queueName;
+import static indexer.messages.artemis.Config.url;
+import static indexer.messages.artemis.Config.username;
+
+import indexer.impl.Indexer;
 import javax.jms.JMSException;
 import javax.jms.Connection;
 import javax.jms.Message;
@@ -15,20 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class Receiver {
-    private static final String url = "tcp://artemis:61616";
-    public static final String username = "artemis";
-    public static final String password = "artemis";
-    private static final String queueName = "MESSAGE_QUEUE";
+public class MessageReceiver {
+    private static final Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
 
     private final Indexer indexer;
-    private final CloudDataLake dataLake;
 
-    public Receiver(CloudDataLake dataLake) {
-        this.dataLake = dataLake;
-        this.indexer = new Indexer(dataLake);
+    public MessageReceiver(Indexer indexer) {
+        this.indexer = indexer;
     }
 
     public void start() {
@@ -39,7 +38,6 @@ public class Receiver {
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = session.createQueue(queueName);
-
 
             MessageConsumer consumer = session.createConsumer(queue);
 
