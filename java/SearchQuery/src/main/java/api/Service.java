@@ -20,7 +20,7 @@ public class Service {
         List<Integer> indexes = dataMart.getInvertedIndexOf(word);
         List<String> names = indexes.stream().map(dataLake::getTitle).collect(Collectors.toList());
 
-        logger.info("REQ = \"" + word +"\" -> " + names);
+        logger.info("REQ: \"" + word +"\" -> " + names);
 
         SearchRequest req = new SearchRequest(word, names);
         return serializer.toJson(req);
