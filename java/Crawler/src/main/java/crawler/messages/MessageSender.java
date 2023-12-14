@@ -1,9 +1,8 @@
-package crawler.ctrl;
+package crawler.messages;
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import javax.jms.Queue;
 import javax.jms.Connection;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -25,6 +24,7 @@ public class MessageSender {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url, username, password);
             Connection connection = connectionFactory.createConnection();
             connection.start();
+            logger.info("Connection to ActiveMQ established.");
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = session.createQueue(queueName);

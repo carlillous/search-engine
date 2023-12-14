@@ -1,12 +1,12 @@
 package crawler;
 
-import datalake.cloud.CloudDataLake;
-import crawler.impl.Controller;
+import datalake.cloud.DataLake;
+import crawler.run.Runner;
 
 public class Main {
     public static void main(String[] args) {
-        CloudDataLake dataLake = new CloudDataLake();
-        Controller controller = new Controller(dataLake);
-        controller.start();
+        DataLake dataLake = new DataLake();
+        Runner runner = new Runner(dataLake);
+        runner.run();
     }
 }

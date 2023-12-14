@@ -1,40 +1,42 @@
 package crawler.impl;
 
+import crawler.utils.Gutenberg;
 import crawler.messages.MessageSender;
-import datalake.cloud.CloudDataLake;
+import datalake.cloud.DataLake;
 import java.util.Optional;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;
-import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Downloader {
-    private final CloudDataLake dataLake;
-    private static final Logger logger = LoggerFactory.getLogger(Downloader.class);
+public class Crawler {
+    private final DataLake dataLake;
+    private static final Logger logger = LoggerFactory.getLogger(Crawler.class);
 
-    public Downloader(CloudDataLake dataLake){
+    public Crawler(DataLake dataLake){
         this.dataLake = dataLake;
     }
 
     public void run() {
-        int id = getRandomBookIndex();
-        String fileName = id + ".txt";
-        try {
-            String bookUrl = "https://www.gutenberg.org/cache/epub/" + id + "/pg" + fileName;
-            if (dataLake.contains(fileName)) {
-                logger.error("Book already downloaded: " + fileName);
-            } else {
+        int id = Gutenberg.getRandomBookId();
+        String fileName = Gutenberg.getFileName(id);
+        logger.info("To download: " + fileName);
+        String bookUrl = Gutenberg.getUrl(id);
+        if (dataLake.contains(fileName)) {
+            logger.error("Book already downloaded: " + fileName);
+        } else {
+            try {
                 Optional<String> optData = download(bookUrl);
                 if (optData.isPresent()) {
                     String data = optData.get();
                     save(fileName, data);
                 }
+            } catch (Exception e) {
+                logger.error("Exception: " + e);
             }
-        } catch (Exception e) {
-            logger.error("Exception: " + e);
         }
+        logger.info("Done: " + fileName);
     }
 
     private void save(String name, String data) {
@@ -47,10 +49,6 @@ public class Downloader {
         logger.info("Done!");
     }
 
-    private int getRandomBookIndex() {
-        Random random = new Random();
-        return random.nextInt(70000) + 1;
-    }
 
     private Optional<String> download(String url) {
         try {

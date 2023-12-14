@@ -1,32 +1,26 @@
-package crawler.threads;
+package crawler.run;
 
-import crawler.impl.Downloader;
-import datalake.cloud.CloudDataLake;
+import crawler.impl.Crawler;
+import datalake.cloud.DataLake;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Runner {
-    private final Downloader downloader;
+    private final Crawler crawler;
 
-    public Runner(CloudDataLake dataLake){
-        this.downloader = new Downloader(dataLake);
+    public Runner(DataLake dataLake){
+        this.crawler = new Crawler(dataLake);
         this.run();
     }
 
-    public void run(){
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-        try {
-            executor.scheduleAtFixedRate(downloader::run, 0, 1, TimeUnit.MINUTES);
-
+    public void run() {
+        try(ScheduledExecutorService executor = Executors.newScheduledThreadPool(1)) {
+            executor.scheduleAtFixedRate(crawler::run, 0, 1, TimeUnit.MINUTES);
             Thread.currentThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            executor.shutdown();
+            throw new RuntimeException(e);
         }
-
     }
 }
