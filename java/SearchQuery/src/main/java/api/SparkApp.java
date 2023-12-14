@@ -1,8 +1,5 @@
 package api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class SparkApp {
     private static final Service service = new Service();
 

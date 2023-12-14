@@ -25,7 +25,9 @@ public class DataMart {
 
         for (String word : words) {
             this.words.putIfAbsent(word, new ArrayList<>());
-            this.words.get(word).add(id);
+            ArrayList<Integer> values = new ArrayList<>(this.words.get(word));
+            values.add(id);
+            this.words.put(word, values);
         }
     }
 
