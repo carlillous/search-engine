@@ -1,6 +1,7 @@
 package indexer;
 
 import datalake.cloud.CloudDataLake;
+import datalake.cloud.service.CloudReader;
 import datalake.utils.*;
 import impl.DataMart;
 import impl.file.FileSystemDataMart;
@@ -23,7 +24,7 @@ public class Indexer {
     }
 
     public void index(String fileName) {
-        Book book = reader.readBook(fileName);
+        Book book = reader.read(fileName);
         int index = book.getIndex();
         String bookName = book.getName();
         List<String> words = book.getWords();

@@ -1,9 +1,24 @@
-package crawler.ctrl;
+package indexer.parsing;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ContentManager {
+public class BookParser {
+    public static class ParsedData {
+        public String name;
+        public String content;
+
+        public ParsedData(String name, String content) {
+            this.name = name;
+            this.content = content;
+        }
+    }
+
+    public ParsedData parse(String data) {
+        String content = getBookContent(data);
+        String name = getBookTitle(content);
+        return new ParsedData(name, content);
+    }
 
     public static String getBookTitle(String bookContent){
         String[] lines = bookContent.split("\n");
@@ -15,10 +30,10 @@ public class ContentManager {
             }
         }
 
-        return title;
+        return cleanFilename(title);
     }
 
-    public static String cleanFilename(String title) {
+    private static String cleanFilename(String title) {
 
         String[][] replacements = {
                 {":", " "}, {" ", "_"}, {",", ""}, {".", ""},
@@ -31,7 +46,10 @@ public class ContentManager {
         }
 
         return title;
+    }
 
+    public static String getBookFileName(int id) {
+        return id + ".txt";
     }
 
     public static String getBookContent(String content){

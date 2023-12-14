@@ -1,24 +1,21 @@
-package crawler.impl;
+package crawler.threads;
 
+import crawler.impl.Downloader;
 import datalake.cloud.CloudDataLake;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Controller {
-
-    private final CloudDataLake dataLake ;
+public class Runner {
     private final Downloader downloader;
 
-    public Controller(CloudDataLake dataLake){
-        this.dataLake = dataLake;
+    public Runner(CloudDataLake dataLake){
         this.downloader = new Downloader(dataLake);
-        this.start();
+        this.run();
     }
 
-    public void start(){
-
+    public void run(){
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
         try {
@@ -32,11 +29,4 @@ public class Controller {
         }
 
     }
-
-    public CloudDataLake getDataLake(){
-        return this.dataLake;
-    }
-
-
-
 }
