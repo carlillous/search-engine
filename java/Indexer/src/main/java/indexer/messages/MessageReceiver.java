@@ -34,7 +34,7 @@ public class MessageReceiver {
         try(ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url, username, password)) {
             Connection connection = connectionFactory.createConnection();
             connection.start();
-            logger.info("Connection to ActiveMQ established.");
+//            logger.info("Connection to ActiveMQ established.");
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = session.createQueue(queueName);
@@ -42,6 +42,7 @@ public class MessageReceiver {
             MessageConsumer consumer = session.createConsumer(queue);
 
             while(true) {
+                logger.info("Waiting for message...");
                 Message messageReceived = consumer.receive();
                 onMessage(messageReceived);
             }

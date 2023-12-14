@@ -44,7 +44,6 @@ public class Crawler {
         dataLake.save(name, data);
         logger.info("Done!");
 
-        logger.info("Sending message: " + name + "...");
         MessageSender.sendMessage(name);
         logger.info("Done!");
     }

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class BookSplitter {
     public static SplitBook split(String data) {
         String content = getBookContent(data);
-        String name = getBookTitle(content);
+        String name = getBookTitle(data);
         return new SplitBook(name, content);
     }
 
