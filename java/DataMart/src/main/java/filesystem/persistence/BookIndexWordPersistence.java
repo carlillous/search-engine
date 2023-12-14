@@ -1,6 +1,6 @@
-package persistence;
+package filesystem.persistence;
 
-import persistence.facade.FileListPersistenceFacade;
+import filesystem.persistence.facade.FileListPersistenceFacade;
 
 public class BookIndexWordPersistence extends FileListPersistenceFacade {
     public BookIndexWordPersistence(String path, String extension) {

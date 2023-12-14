@@ -1,8 +1,8 @@
-package impl.file;
+package filesystem.impl.file;
 
-import impl.DataMart;
-import persistence.BookIndexWordPersistence;
-import util.inserter.list.UniqueIntegerListInserter;
+import filesystem.inserter.list.UniqueIntegerListInserter;
+import filesystem.persistence.BookIndexWordPersistence;
+import filesystem.impl.DataMart;
 
 import java.util.List;
 

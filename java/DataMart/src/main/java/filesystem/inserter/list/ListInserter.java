@@ -1,6 +1,6 @@
-package util.inserter.list;
+package filesystem.inserter.list;
 
-import util.inserter.Inserter;
+import filesystem.inserter.Inserter;
 
 import java.util.List;
 

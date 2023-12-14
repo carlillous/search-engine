@@ -1,9 +1,8 @@
-package persistence.facade;
+package filesystem.persistence.facade;
 
-import persistence.list.BinaryListPersistence;
-import persistence.list.DataListPersistence;
-import persistence.list.ListPersistence;
-import persistence.repository.FileRepository;
+import filesystem.persistence.list.DataListPersistence;
+import filesystem.persistence.list.ListPersistence;
+import filesystem.persistence.repository.FileRepository;
 
 import java.io.File;
 import java.util.List;
