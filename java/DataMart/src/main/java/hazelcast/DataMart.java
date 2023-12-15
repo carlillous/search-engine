@@ -6,17 +6,18 @@ import static hazelcast.Config.WORDS;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
+import com.hazelcast.multimap.MultiMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class DataMart {
-    private final IMap<String, List<Integer>> words;
+    private final MultiMap<String, Integer> words;
     private final IMap<Integer, String> names;
 
     public DataMart() {
         HazelcastInstance client = Hazelcast.newHazelcastInstance();
-        words = client.getMap(WORDS);
+        words = client.getMultiMap(WORDS);
         names = client.getMap(NAMES);
     }
 
@@ -24,18 +25,12 @@ public class DataMart {
         names.put(id, bookName);
 
         for (String word : words) {
-            this.words.putIfAbsent(word, new ArrayList<>());
-            ArrayList<Integer> values = new ArrayList<>(this.words.get(word));
-            values.add(id);
-            this.words.put(word, values);
+            this.words.put(word, id);
         }
     }
 
     public List<Integer> getInvertedIndexOf(String word) {
-        if (words.containsKey(word)) {
-            return words.get(word);
-        }
-        return new ArrayList<>();
+        return new ArrayList<>(words.get(word));
     }
 
     public Optional<String> getBookName(int id) {
