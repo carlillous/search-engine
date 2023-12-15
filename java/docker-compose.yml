@@ -4,6 +4,7 @@ services:
   crawler:
     build: Crawler
     image: adamprochazka/ulpgc-bd-crawler
+    platform: linux/amd64
     container_name: crawler
     depends_on:
       artemis:
@@ -12,6 +13,7 @@ services:
   indexer:
     build: Indexer
     image: adamprochazka/ulpgc-bd-indexer
+    platform: linux/amd64
     container_name: indexer
     depends_on:
       artemis:
@@ -20,7 +22,7 @@ services:
   query:
     build: SearchQuery
     image: adamprochazka/ulpgc-bd-query
-#    platform: linux/amd64
+    platform: linux/amd64
     container_name: query
     ports:
       - "4567:4567"
