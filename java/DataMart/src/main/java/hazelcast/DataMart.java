@@ -1,13 +1,17 @@
 package hazelcast;
 
-import static hazelcast.Config.NAMES;
-import static hazelcast.Config.WORDS;
+import static hazelcast.HazelcastConfig.NAMES;
+import static hazelcast.HazelcastConfig.WORDS;
 
+import com.hazelcast.config.Config;
+import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.multimap.MultiMap;
+import hazelcast.persistency.BucketMapStore;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +20,13 @@ public class DataMart {
     private final IMap<Integer, String> names;
 
     public DataMart() {
-        HazelcastInstance client = Hazelcast.newHazelcastInstance();
+        Config config = new Config();
+        config.getMapConfig(NAMES)
+            .setMapStoreConfig(
+                new MapStoreConfig()
+                    .setEnabled(true)
+                    .setImplementation(new BucketMapStore()));
+        HazelcastInstance client = Hazelcast.newHazelcastInstance(config);
         words = client.getMultiMap(WORDS);
         names = client.getMap(NAMES);
     }
@@ -39,4 +49,8 @@ public class DataMart {
         }
         return Optional.empty();
     }
+
+//    public static void main(String[] args) {
+//        System.out.println(new DataMart().getBookName(0));
+//    }
 }
