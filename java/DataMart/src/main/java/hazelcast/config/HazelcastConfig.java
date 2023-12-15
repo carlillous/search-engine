@@ -1,4 +1,4 @@
-package hazelcast;
+package hazelcast.config;
 
 public class HazelcastConfig {
     public static final String WORDS = "dataMartWords";

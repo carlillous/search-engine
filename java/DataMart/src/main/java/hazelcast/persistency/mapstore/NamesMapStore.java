@@ -1,4 +1,4 @@
-package hazelcast.persistency;
+package hazelcast.persistency.mapstore;
 
 import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.Blob;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BucketMapStore implements MapStore<Integer, String> {
+public class NamesMapStore implements MapStore<Integer, String> {
     private final GoogleBucket bucket = new GoogleBucket(new NamesConfig());
 
     @Override
