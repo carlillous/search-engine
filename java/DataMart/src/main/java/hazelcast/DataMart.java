@@ -17,6 +17,7 @@ import java.util.Optional;
 public class DataMart {
     private final IMap<String, List<Integer>> words;
     private final IMap<Integer, String> names;
+    private final WordsMapStore wordsMapStore = new WordsMapStore();
 
     public DataMart() {
         Config config = new Config();
@@ -27,16 +28,11 @@ public class DataMart {
                     .setEnabled(true)
                     .setImplementation(new NamesMapStore()));
 
-        config.getMapConfig(WORDS)
-            .setMapStoreConfig(
-                new MapStoreConfig()
-                    .setEnabled(true)
-//                    .setWriteDelaySeconds(5)
-                    .setImplementation(new WordsMapStore()));
-
         HazelcastInstance client = Hazelcast.newHazelcastInstance(config);
-        words = client.getMap(WORDS);
         names = client.getMap(NAMES);
+        words = client.getMap(WORDS);
+        if (words.isEmpty())
+            load_words();
     }
 
     public void addWords(int id, String bookName, List<String> words) {
@@ -48,6 +44,16 @@ public class DataMart {
             values.add(id);
             this.words.put(word, values);
         }
+
+        save_words();
+    }
+
+    private void load_words() {
+        this.words.putAll(wordsMapStore.load());
+    }
+
+    private void save_words() {
+        wordsMapStore.store(words);
     }
 
     public List<Integer> getInvertedIndexOf(String word) {

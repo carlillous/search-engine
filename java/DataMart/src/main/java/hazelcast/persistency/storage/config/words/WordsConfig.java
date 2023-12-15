@@ -4,7 +4,7 @@ import hazelcast.persistency.storage.config.GoogleBucketConfig;
 
 public class WordsConfig implements GoogleBucketConfig {
     public static String projectId = "search-engine-404311";
-    public static String bucketId = "ulpgc-big-data-search-engine-hazelcast-indexes";
+    public static String bucketId = "ulpgc-big-data-search-engine-hazelcast-words";
 
     @Override
     public String projectId() {

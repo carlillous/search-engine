@@ -16,66 +16,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class WordsMapStore implements MapStore<String, List<Integer>> {
+public class WordsMapStore {
     private final GoogleBucket bucket = new GoogleBucket(new WordsConfig());
+    private static final String FILENAME = "map.json";
 
-    @Override
-    public void store(String s, List<Integer> integers) {
+    public void store(Map<String, List<Integer>> map) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            bucket.createBlob(s, mapper.writeValueAsString(integers));
+            bucket.createBlob(FILENAME, mapper.writeValueAsString(map));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void storeAll(Map<String, List<Integer>> map) {
-        for (Map.Entry<String, List<Integer>> entry : map.entrySet())
-            store(entry.getKey(), entry.getValue());
-    }
-
-    @Override
-    public void delete(String s) {
-
-    }
-
-    @Override
-    public void deleteAll(Collection<String> collection) {
-
-    }
-
-    @Override
-    public List<Integer> load(String s) {
-        Blob blob = bucket.getBlob(s);
+    public Map<String, List<Integer>> load() {
+        Blob blob = bucket.getBlob(FILENAME);
         if (blob == null)
-            return null;
+            return new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(blob.getContent(), new TypeReference<>() {});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public Map<String, List<Integer>> loadAll(Collection<String> collection) {
-        Map<String, List<Integer>> map = new HashMap<>();
-        for(String s : collection) {
-            List<Integer> value = load(s);
-            if (value != null) {
-                map.put(s, value);
-            }
-        }
-        return map;
-    }
-
-    @Override
-    public Iterable<String> loadAllKeys() {
-        Page<Blob> blobs = bucket.list();
-        return blobs.streamAll()
-            .map(BlobInfo::getName)
-            .collect(Collectors.toList());
-
     }
 }
