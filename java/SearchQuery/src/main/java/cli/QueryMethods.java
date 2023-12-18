@@ -1,8 +1,8 @@
 package cli;
 
-import impl.DataMart;
+import filesystem.impl.DataMart;
 import datalake.filesystem.DataLake;
-import impl.file.FileSystemDataMart;
+import filesystem.impl.file.FileSystemDataMart;
 
 
 import java.util.List;
