@@ -1,41 +1,24 @@
-version: '3.8'
-
 services:
-  builder:
-    container_name: builder
-    image: maven:3.9-amazoncorretto-11
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: mvn clean package
-
   crawler:
-    build: Crawler
     image: adamprochazka/ulpgc-bd-crawler
+    platform: linux/amd64
     container_name: crawler
     depends_on:
-      builder:
-        condition: service_completed_successfully
       artemis:
         condition: service_healthy
 
   indexer:
-    build: Indexer
     image: adamprochazka/ulpgc-bd-indexer
+    platform: linux/amd64
     container_name: indexer
     depends_on:
-      builder:
-        condition: service_completed_successfully
       artemis:
         condition: service_healthy
 
   query:
-    build: SearchQuery
     image: adamprochazka/ulpgc-bd-query
+    platform: linux/amd64
     container_name: query
-    depends_on:
-      builder:
-        condition: service_completed_successfully
     ports:
       - "4567:4567"
 
