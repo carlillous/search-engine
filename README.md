@@ -13,4 +13,4 @@ GET http://<URL>:4567/search/<word>
 **Carlos Mendoza** - @carlillous <br>
 **Maciej Jamka** - @BongoloZakolo <br>
 **Carlos Santana** - @carlos-esplaa <br>
-
+**Jorge Rey** - @JorgeReyMelian <br>
